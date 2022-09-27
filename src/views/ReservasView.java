@@ -56,14 +56,14 @@ public class ReservasView extends JFrame{
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ReservasView.class.getResource("/img/hotel_40px.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 560);
-		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.control);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setResizable(false);
 		setLocationRelativeTo(null);
-		setUndecorated(false);
+		setUndecorated(true);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
@@ -85,10 +85,16 @@ public class ReservasView extends JFrame{
 		panel.add(separatorCheckOut);
 		
 		JSeparator separatorValorReserva = new JSeparator();
-		separatorValorReserva.setForeground(new Color(12, 138, 199));
 		separatorValorReserva.setBackground(new Color(12, 138, 199));
-		separatorValorReserva.setBounds(68, 453, 289, 2);
-		panel.add(separatorValorReserva );
+		separatorValorReserva.setForeground(new Color(12, 138, 199));
+		separatorValorReserva.setBounds(68, 362, 289, 2);
+		panel.add(separatorValorReserva);
+		
+		JSeparator separatorFormaPagamento = new JSeparator();
+		separatorFormaPagamento.setForeground(new Color(12, 138, 199));
+		separatorFormaPagamento.setBackground(new Color(12, 138, 199));
+		separatorFormaPagamento.setBounds(68, 453, 289, 2);
+		panel.add(separatorFormaPagamento);
 		
 		dataEntrada = new JDateChooser();
 		dataEntrada.getCalendarButton().setBackground(new Color(12, 138, 199));
@@ -155,8 +161,8 @@ public class ReservasView extends JFrame{
 		
 		JLabel labelValor = new JLabel("VALOR DA RESERVA");
 		labelValor.setForeground(SystemColor.textHighlight);
-		labelValor.setBounds(72, 303, 196, 14);
-		labelValor.setFont(new Font("Roboto Black", Font.PLAIN, 18));
+		labelValor.setBounds(72, 303, 220, 14);
+		labelValor.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		panel.add(labelValor);
 		
 		formaPagamento = new JComboBox();
@@ -168,9 +174,9 @@ public class ReservasView extends JFrame{
 		panel.add(formaPagamento);
 		
 		JLabel labelFormaPagamento = new JLabel("FORMA DE PAGAMENTO");
-		labelFormaPagamento.setForeground(SystemColor.textInactiveText);
-		labelFormaPagamento.setBounds(68, 382, 213, 24);
-		labelFormaPagamento.setFont(new Font("Roboto black", Font.BOLD, 18));
+		labelFormaPagamento.setForeground(SystemColor.textHighlight);
+		labelFormaPagamento.setBounds(68, 382, 240, 24);
+		labelFormaPagamento.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		panel.add(labelFormaPagamento);
 		
 		JPanel panel_1 = new JPanel();
@@ -272,12 +278,6 @@ public class ReservasView extends JFrame{
 		labelAtras.setHorizontalAlignment(SwingConstants.CENTER);
 		labelAtras.setFont(new Font("Roboto", Font.PLAIN, 23));
 		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setForeground(SystemColor.textHighlight);
-		separator_1.setBounds(68, 362, 289, 2);
-		separator_1.setBackground(SystemColor.textHighlight);
-		panel.add(separator_1);
-		
 		JPanel btnNext = new JPanel();
 		btnNext.addMouseListener(new MouseAdapter() {
 		
@@ -293,8 +293,8 @@ public class ReservasView extends JFrame{
 		});
 		
 		btnNext.setLayout(null);
-		btnNext.setBackground(SystemColor.textHighlight);
-		btnNext.setBounds(238, 493, 122, 35);
+		btnNext.setBackground(new Color(12, 138, 199));
+		btnNext.setBounds(238, 473, 122, 35);
 		panel.add(btnNext);
 		btnNext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		
