@@ -101,7 +101,8 @@ public class MenuPrincipal extends JFrame {
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
+				ConfirmaSaida confirmarSaida = new ConfirmaSaida();
+				confirmarSaida.setVisible(true);
 			}
 			
 			@Override 
