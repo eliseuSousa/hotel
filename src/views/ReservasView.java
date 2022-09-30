@@ -8,11 +8,11 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -33,6 +33,8 @@ import com.toedter.calendar.JDateChooser;
 public class ReservasView extends JFrame{
 
 	private float TAXA_DIARIA = 60f;
+	private int TAMANHO_CODIGO = 12;
+	private static String codigoReserva;
 	private JPanel contentPane;
 	private JTextField campoValor;
 	private JDateChooser campoDataEntrada;
@@ -142,10 +144,14 @@ public class ReservasView extends JFrame{
 		
 		campoDataSaida.addPropertyChangeListener(new PropertyChangeListener() {
 			
+			@SuppressWarnings("deprecation")
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				//Ativa o evento, após o usuário selecionar as datas, o valor da reserva deve ser calculado
-				System.out.println("O valor da reserva deve ser calculado agora!");
+				if(campoDataEntrada.getDate() != null && campoDataSaida != null) {
+					float valorReserva = (campoDataSaida.getDate().getDay() - campoDataEntrada.getDate().getDay())*TAXA_DIARIA;
+					System.out.println(valorReserva);	
+				}
 			}
 		});
 		
@@ -292,12 +298,14 @@ public class ReservasView extends JFrame{
 					
 					String dataEntrada = new SimpleDateFormat("yyyy-MM-dd").format(campoDataEntrada.getDate());
 					String dataSaida = new SimpleDateFormat("yyyy-MM-dd").format(campoDataSaida.getDate());
+
 					String getFormaPagamento = (String) formaPagamento.getSelectedItem();
+					codigoReserva = geradorCodigo();
 					
 					System.out.println("Data Entrada: "+dataEntrada);
 					System.out.println("Data Saida: "+dataSaida);
 					System.out.println("Forma de pagamento: "+getFormaPagamento);
-					
+					System.out.println("ID Reserva: "+codigoReserva);
 					RegistroHospede registroHospede = new RegistroHospede();
 					registroHospede.setVisible(true);
 					dispose();
@@ -320,6 +328,24 @@ public class ReservasView extends JFrame{
 		lblBtnNext.setFont(new Font("Roboto", Font.PLAIN, 18));
 		lblBtnNext.setBounds(0, 0, 122, 35);
 		btnNext.add(lblBtnNext);
+	}
+	
+	private String geradorCodigo() {
+		
+		String codigoGerado = "";
+		String[] caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split("");
+		int indice;
+		
+		for(int i = 0; i < TAMANHO_CODIGO; i++) {
+			indice = (int) Math.round(Math.random()*caracteres.length);
+			codigoGerado += caracteres[indice];
+		}
+		
+		return codigoGerado;
+	}
+	
+	public String getCodigoReserva() {
+		return codigoReserva;
 	}
 	
 	private void headerMousePressed(java.awt.event.MouseEvent event) {

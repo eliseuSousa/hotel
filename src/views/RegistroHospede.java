@@ -283,7 +283,8 @@ public class RegistroHospede extends JFrame {
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				//String id_reserva = new ReservasView().getCodigoReserva();
+				//System.out.println("ID de reserva: "+id_reserva);
 			}
 		});
 		btnSalvar.setLayout(null);
