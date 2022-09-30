@@ -11,6 +11,8 @@ import java.awt.event.MouseMotionAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -30,11 +32,12 @@ import com.toedter.calendar.JDateChooser;
 @SuppressWarnings("serial")
 public class ReservasView extends JFrame{
 
+	private float TAXA_DIARIA = 60f;
 	private JPanel contentPane;
-	public static JTextField campoValor;
-	public static JDateChooser dataEntrada;
-	public static JDateChooser dataSaida;
-	public static JComboBox<Format> formaPagamento;
+	private JTextField campoValor;
+	private JDateChooser campoDataEntrada;
+	private JDateChooser campoDataSaida;
+	private JComboBox<Format> formaPagamento;
 	int xMouse, yMouse;
 	private JLabel labelExit;
 	private JLabel labelValorSimbolo;
@@ -96,21 +99,21 @@ public class ReservasView extends JFrame{
 		separatorFormaPagamento.setBounds(68, 453, 289, 2);
 		panel.add(separatorFormaPagamento);
 		
-		dataEntrada = new JDateChooser();
-		dataEntrada.getCalendarButton().setBackground(new Color(12, 138, 199));
-		dataEntrada.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/img/icon-reservas.png")));
-		dataEntrada.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 12));
-		dataEntrada.setBounds(68, 161, 289, 35);
-		dataEntrada.getCalendarButton().setBounds(268, 0, 21, 33);
-		dataEntrada.setBackground(Color.WHITE);
-		dataEntrada.setBorder(new LineBorder(SystemColor.window));
-		dataEntrada.setDateFormatString("yyyy-MM-dd");
-		dataEntrada.setFont(new Font("Roboto", Font.PLAIN, 18));
-		panel.add(dataEntrada);
+		campoDataEntrada = new JDateChooser();
+		campoDataEntrada.getCalendarButton().setBackground(new Color(12, 138, 199));
+		campoDataEntrada.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/img/icon-reservas.png")));
+		campoDataEntrada.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 12));
+		campoDataEntrada.setBounds(68, 161, 289, 35);
+		campoDataEntrada.getCalendarButton().setBounds(268, 0, 21, 33);
+		campoDataEntrada.setBackground(Color.WHITE);
+		campoDataEntrada.setBorder(new LineBorder(SystemColor.window));
+		campoDataEntrada.setDateFormatString("dd/MM/yyyy");
+		campoDataEntrada.setFont(new Font("Roboto", Font.PLAIN, 18));
+		panel.add(campoDataEntrada);
 		
-		labelValorSimbolo = new JLabel("$");
+		labelValorSimbolo = new JLabel("R$");
 		labelValorSimbolo.setVisible(true);
-		labelValorSimbolo.setBounds(68, 332, 17, 25);
+		labelValorSimbolo.setBounds(68, 332, 28, 25);
 		labelValorSimbolo.setBackground(new Color(12, 138, 199));
 		labelValorSimbolo.setForeground(new Color(12, 138, 199));
 		labelValorSimbolo.setFont(new Font("Roboto", Font.BOLD, 17));
@@ -128,32 +131,33 @@ public class ReservasView extends JFrame{
 		labelCheckOut.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		panel.add(labelCheckOut);
 		
-		dataSaida = new JDateChooser();
-		dataSaida.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/img/icon-reservas.png")));
-		dataSaida.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
-		dataSaida.setBounds(68, 246, 289, 35);
-		dataSaida.getCalendarButton().setBounds(267, 1, 21, 31);
-		dataSaida.setBackground(new Color(12, 138, 199));
-		dataSaida.getCalendarButton().setBackground(new Color(12, 138, 199));
-		dataSaida.setFont(new Font("Roboto", Font.PLAIN, 18));
+		campoDataSaida = new JDateChooser();
+		campoDataSaida.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/img/icon-reservas.png")));
+		campoDataSaida.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
+		campoDataSaida.setBounds(68, 246, 289, 35);
+		campoDataSaida.getCalendarButton().setBounds(267, 1, 21, 31);
+		campoDataSaida.setBackground(new Color(12, 138, 199));
+		campoDataSaida.getCalendarButton().setBackground(new Color(12, 138, 199));
+		campoDataSaida.setFont(new Font("Roboto", Font.PLAIN, 18));
 		
-		dataSaida.addPropertyChangeListener(new PropertyChangeListener() {
+		campoDataSaida.addPropertyChangeListener(new PropertyChangeListener() {
 			
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				//Ativa o evento, após o usuário selecionar as datas, o valor da reserva deve ser calculado
+				System.out.println("O valor da reserva deve ser calculado agora!");
 			}
 		});
 		
-		dataSaida.setDateFormatString("yyyy-MM-dd");
-		dataSaida.setBorder(new LineBorder(new Color(255, 255, 255), 0));
-		panel.add(dataSaida);
+		campoDataSaida.setDateFormatString("dd/MM/yyyy");
+		campoDataSaida.setBorder(new LineBorder(new Color(255, 255, 255), 0));
+		panel.add(campoDataSaida);
 		
 		campoValor = new JTextField();
 		campoValor.setBackground(SystemColor.text);
 		campoValor.setHorizontalAlignment(SwingConstants.LEFT);
 		campoValor.setForeground(Color.BLACK);
-		campoValor.setBounds(90, 328, 270, 33);
+		campoValor.setBounds(105, 328, 250, 33);
 		campoValor.setFont(new Font("Roboto Black", Font.BOLD, 17));
 		campoValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		campoValor.setColumns(10);
@@ -283,9 +287,21 @@ public class ReservasView extends JFrame{
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(ReservasView.dataEntrada.getDate() != null && ReservasView.dataSaida.getDate() != null) {
+				
+				if(campoDataEntrada.getDate() != null && campoDataEntrada.getDate() != null) {
+					
+					String dataEntrada = new SimpleDateFormat("yyyy-MM-dd").format(campoDataEntrada.getDate());
+					String dataSaida = new SimpleDateFormat("yyyy-MM-dd").format(campoDataSaida.getDate());
+					String getFormaPagamento = (String) formaPagamento.getSelectedItem();
+					
+					System.out.println("Data Entrada: "+dataEntrada);
+					System.out.println("Data Saida: "+dataSaida);
+					System.out.println("Forma de pagamento: "+getFormaPagamento);
+					
 					RegistroHospede registroHospede = new RegistroHospede();
 					registroHospede.setVisible(true);
+					dispose();
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
 				}

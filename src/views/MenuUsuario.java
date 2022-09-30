@@ -160,7 +160,9 @@ public class MenuUsuario extends JFrame {
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
+				Login login = new Login();
+				login.setVisible(true);
+				dispose();
 			}
 			
 			@Override

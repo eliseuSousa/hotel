@@ -27,6 +27,9 @@ public class Login extends JFrame{
 	private JLabel lblExit;
 	int xMouse, yMouse;
 	
+	private String USUARIO = "adm";
+	private String SENHA = "adm";
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			
@@ -190,7 +193,7 @@ public class Login extends JFrame{
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Login();
+				autenticarLogin();
 			}
 		});
 		btnLogin.setBackground(SystemColor.textHighlight);
@@ -234,14 +237,12 @@ public class Login extends JFrame{
 		header.setLayout(null);
 	}
 	
-	private void Login() {
+	private void autenticarLogin() {
 		
-		String usuario = "adm";
-		String senha = "adm";
-		
+		String usuarioInformado = txtUsuario.getText();
 		String senhaInformada = new String(txtSenha.getPassword());
-		
-		if(txtUsuario.getText().equals(usuario) && senhaInformada.equals(senha)) {
+
+		if(usuarioInformado.equals(USUARIO) && senhaInformada.equals(SENHA)) {
 			MenuUsuario  menu = new MenuUsuario();
 			menu.setVisible(true);
 			dispose();
