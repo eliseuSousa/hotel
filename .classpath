@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="/home/eliseu/Área de Trabalho/projeto_poo/hotel/lib/jcalender/jgoodies-common-1.2.0.jar"/>
 	<classpathentry kind="lib" path="/home/eliseu/Área de Trabalho/projeto_poo/hotel/lib/jcalender/jgoodies-looks-2.4.1.jar"/>
 	<classpathentry kind="lib" path="/home/eliseu/Área de Trabalho/projeto_poo/hotel/lib/jcalender/junit-4.6.jar"/>
+	<classpathentry kind="lib" path="/home/eliseu/Área de Trabalho/projeto_poo/hotel/lib/jdbc/mysql-connector-java-8.0.30.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
