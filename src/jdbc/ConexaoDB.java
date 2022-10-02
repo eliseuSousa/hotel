@@ -6,17 +6,19 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ConexaoDB {
-	private String url = "jdbc:mysql://localohos/HOTEL";
+	
+	private String url = "jdbc:mysql://localhost/HOTEL";
 	private String user = "root";
 	private String password = "";
 	
-	public void insertReservaDB(String idReserva, String dataE, String dataS, float valor, String formaPagamento) {
+	public boolean insertReservaDB(String idReserva, String dataE, String dataS, float valor, String formaPagamento) {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conexao = DriverManager.getConnection(url, user, password);
+			PreparedStatement ps;
 			
-			String insert = "INSERT INTO HOTEL.RESERVAS("
+			String insertReserva = "INSERT INTO HOTEL.RESERVAS("
 					+ "ID_RESERVA,"
 					+ "DATA_ENTRADA,"
 					+ "DATA_SAIDA,"
@@ -24,7 +26,7 @@ public class ConexaoDB {
 					+ "FORMA_PAGAMENTO)"
 					+ "VALUES(?, ?, ?, ?, ?);";
 			
-			PreparedStatement ps = conexao.prepareStatement(insert);
+			ps = conexao.prepareStatement(insertReserva);
 			
 			ps.setString(1, idReserva);
 			ps.setString(2, dataE);
@@ -32,7 +34,48 @@ public class ConexaoDB {
 			ps.setFloat(4, valor);
 			ps.setString(5, formaPagamento);
 			
+			return ps.execute();
+		} 
+		catch(ClassNotFoundException e) {
+			System.out.println("Driver não encontrado");
+			return false;
+		}
+		catch (SQLException e) {
+			System.out.println("Ocorreu um erro com o banco de dados: "+e.getMessage());
+			return false;
+		}
+	}
+	
+	public void insertHospedeDB(String idHospede, String nome, String sobrenome, String dataNascimento, String nacionalidade, String telefone, String idReserva) {
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conexao = DriverManager.getConnection(url, user, password);
+			PreparedStatement ps;
+			
+			String inserHospede = "INSERT INTO HOTEL.HOSPEDES ("
+					+ "ID_HOSPEDE,"
+					+ "NOME,"
+					+ "SOBRENOME,"
+					+ "DATA_NASCIMENTO,"
+					+ "NACIONALIDADE,"
+					+ "TELEFONE,"
+					+ "ID_RESERVA)"
+					+ "VALUES("
+					+ "?, ?, ?, ?, ?, ?, ?);";
+			
+			ps = conexao.prepareStatement(inserHospede);
+			
+			ps.setString(1, idHospede);
+			ps.setString(2, nome);
+			ps.setString(3, sobrenome);
+			ps.setString(4, dataNascimento);
+			ps.setString(5, nacionalidade);
+			ps.setString(6, telefone);
+			ps.setString(7, idReserva);
+			
 			ps.execute();
+			
 		} 
 		catch(ClassNotFoundException e) {
 			System.out.println("Driver não encontrado");

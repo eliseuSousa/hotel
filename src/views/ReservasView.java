@@ -32,6 +32,8 @@ import javax.swing.border.LineBorder;
 import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
 import com.toedter.calendar.JDateChooser;
 
+import jdbc.ConexaoDB;
+
 @SuppressWarnings("serial")
 public class ReservasView extends JFrame{
 
@@ -42,8 +44,11 @@ public class ReservasView extends JFrame{
 	private float valor;
 	private JTextField campoValor;
 	private JDateChooser campoDataEntrada;
+	private String dataEntrada;
 	private JDateChooser campoDataSaida;
+	private String dataSaida;
 	private JComboBox<Format> formaPagamento;
+	private String formaPagam;
 	int xMouse, yMouse;
 	private JLabel labelExit;
 	private JLabel labelValorSimbolo;
@@ -148,13 +153,12 @@ public class ReservasView extends JFrame{
 		
 		campoDataSaida.addPropertyChangeListener(new PropertyChangeListener() {
 			
-			@SuppressWarnings("deprecation")
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				//Ativa o evento, após o usuário selecionar as datas, o valor da reserva deve ser calculado
 				if(campoDataEntrada.getDate() != null && campoDataSaida != null) {
-					String dataEntrada = new SimpleDateFormat("yyyy-MM-dd").format(campoDataEntrada.getDate());
-					String dataSaida = new SimpleDateFormat("yyyy-MM-dd").format(campoDataSaida.getDate());
+					dataEntrada = new SimpleDateFormat("yyyy-MM-dd").format(campoDataEntrada.getDate());
+					dataSaida = new SimpleDateFormat("yyyy-MM-dd").format(campoDataSaida.getDate());
 					
 					LocalDate startDate = LocalDate.of(Integer.valueOf(dataEntrada.split("-")[0]), Integer.valueOf(dataEntrada.split("-")[1]), Integer.valueOf(dataEntrada.split("-")[2]));
 					LocalDate endDate = LocalDate.of(Integer.valueOf(dataSaida.split("-")[0]), Integer.valueOf(dataSaida.split("-")[1]), Integer.valueOf(dataSaida.split("-")[2]));
@@ -304,12 +308,24 @@ public class ReservasView extends JFrame{
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				boolean result;
 				
 				if(campoDataEntrada.getDate() != null && campoDataEntrada.getDate() != null) {
 					
-					RegistroHospede registroHospede = new RegistroHospede();
-					registroHospede.setVisible(true);
-					dispose();
+					codigoReserva = geradorCodigo();
+					formaPagam = (String) formaPagamento.getSelectedItem();
+					
+					ConexaoDB connect = new ConexaoDB();
+					System.out.println("Carregando...");
+					result = connect.insertReservaDB(codigoReserva, dataEntrada, dataSaida, valor, formaPagam);
+					
+					if(!result) {
+						RegistroHospede registroHospede = new RegistroHospede();
+						registroHospede.setVisible(true);
+						dispose();
+					} else {
+						System.out.println("Erro ao inserir no banco de dados");
+					}
 					
 				} else {
 					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
