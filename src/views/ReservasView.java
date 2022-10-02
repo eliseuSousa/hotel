@@ -13,6 +13,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -27,6 +29,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
 import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
@@ -36,6 +39,7 @@ public class ReservasView extends JFrame{
 	private int TAMANHO_CODIGO = 12;
 	private static String codigoReserva;
 	private JPanel contentPane;
+	private float valor;
 	private JTextField campoValor;
 	private JDateChooser campoDataEntrada;
 	private JDateChooser campoDataSaida;
@@ -149,8 +153,15 @@ public class ReservasView extends JFrame{
 			public void propertyChange(PropertyChangeEvent evt) {
 				//Ativa o evento, após o usuário selecionar as datas, o valor da reserva deve ser calculado
 				if(campoDataEntrada.getDate() != null && campoDataSaida != null) {
-					float valorReserva = (campoDataSaida.getDate().getDay() - campoDataEntrada.getDate().getDay())*TAXA_DIARIA;
-					System.out.println(valorReserva);	
+					String dataEntrada = new SimpleDateFormat("yyyy-MM-dd").format(campoDataEntrada.getDate());
+					String dataSaida = new SimpleDateFormat("yyyy-MM-dd").format(campoDataSaida.getDate());
+					
+					LocalDate startDate = LocalDate.of(Integer.valueOf(dataEntrada.split("-")[0]), Integer.valueOf(dataEntrada.split("-")[1]), Integer.valueOf(dataEntrada.split("-")[2]));
+					LocalDate endDate = LocalDate.of(Integer.valueOf(dataSaida.split("-")[0]), Integer.valueOf(dataSaida.split("-")[1]), Integer.valueOf(dataSaida.split("-")[2]));
+					
+					long dias = ChronoUnit.DAYS.between(startDate, endDate);
+					valor = dias*TAXA_DIARIA;
+					campoValor.setText(String.valueOf(valor));	
 				}
 			}
 		});
@@ -296,16 +307,6 @@ public class ReservasView extends JFrame{
 				
 				if(campoDataEntrada.getDate() != null && campoDataEntrada.getDate() != null) {
 					
-					String dataEntrada = new SimpleDateFormat("yyyy-MM-dd").format(campoDataEntrada.getDate());
-					String dataSaida = new SimpleDateFormat("yyyy-MM-dd").format(campoDataSaida.getDate());
-
-					String getFormaPagamento = (String) formaPagamento.getSelectedItem();
-					codigoReserva = geradorCodigo();
-					
-					System.out.println("Data Entrada: "+dataEntrada);
-					System.out.println("Data Saida: "+dataSaida);
-					System.out.println("Forma de pagamento: "+getFormaPagamento);
-					System.out.println("ID Reserva: "+codigoReserva);
 					RegistroHospede registroHospede = new RegistroHospede();
 					registroHospede.setVisible(true);
 					dispose();
