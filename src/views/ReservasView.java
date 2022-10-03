@@ -341,7 +341,7 @@ public class ReservasView extends JFrame{
 		int indice;
 		
 		for(int i = 0; i < TAMANHO_CODIGO; i++) {
-			indice = (int) Math.round(Math.random()*caracteres.length);
+			indice = (int) Math.round(Math.random()*(caracteres.length - 1));
 			codigoGerado += caracteres[indice];
 		}
 		

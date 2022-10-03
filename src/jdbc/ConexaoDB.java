@@ -35,15 +35,15 @@ public class ConexaoDB {
 			ps.setFloat(4, valor);
 			ps.setString(5, formaPagamento);
 			
-			retornaStatus = ps.execute();
+			ps.execute();
+			
+			retornaStatus = true; 
 		} 
 		catch(ClassNotFoundException e) {
 			System.out.println("Driver não encontrado");
-			return false;
 		}
 		catch (SQLException e) {
 			System.out.println("Ocorreu um erro com o banco de dados: "+e.getMessage());
-			return false;
 		}
 		
 		return retornaStatus;
@@ -79,7 +79,9 @@ public class ConexaoDB {
 			ps.setString(6, telefone);
 			ps.setString(7, idReserva);
 			
-			retornaStatus = ps.execute();
+			ps.execute();
+			
+			retornaStatus = true;
 			
 		} 
 		catch(ClassNotFoundException e) {

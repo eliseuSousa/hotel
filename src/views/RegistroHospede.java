@@ -62,6 +62,7 @@ public class RegistroHospede extends JFrame {
 	}
 	
 	public RegistroHospede() {
+		super("Hóspede");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHospede.class.getResource("/img/LOGO_50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 634);
@@ -211,32 +212,32 @@ public class RegistroHospede extends JFrame {
 		contentPane.add(nacionalidade);
 		
 		JLabel labelNome = new JLabel("NOME");
-		labelNome.setBounds(562, 119, 255, 14);
-		labelNome.setForeground(SystemColor.textInactiveText);
+		labelNome.setBounds(560, 119, 255, 14);
+		labelNome.setForeground(SystemColor.textHighlight);
 		labelNome.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		contentPane.add(labelNome);
 		
 		JLabel labelSobrenome = new JLabel("SOBRENOME");
-		labelSobrenome.setBounds(562, 189, 255, 14);
-		labelSobrenome.setForeground(SystemColor.textInactiveText);
+		labelSobrenome.setBounds(560, 189, 255, 14);
+		labelSobrenome.setForeground(SystemColor.textHighlight);
 		labelSobrenome.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		contentPane.add(labelSobrenome);
 		
 		JLabel labelDataNascimento = new JLabel("DATA DE NASCIMENTO");
 		labelDataNascimento.setBounds(560, 256, 255, 14);
-		labelDataNascimento.setForeground(SystemColor.textInactiveText);
+		labelDataNascimento.setForeground(SystemColor.textHighlight);
 		labelDataNascimento.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		contentPane.add(labelDataNascimento);
 		
 		JLabel labelNacionalidade = new JLabel("NACIONALIDADE");
 		labelNacionalidade.setBounds(560, 326, 255, 14);
-		labelNacionalidade.setForeground(SystemColor.textInactiveText);
+		labelNacionalidade.setForeground(SystemColor.textHighlight);
 		labelDataNascimento.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		contentPane.add(labelNacionalidade);
 		
 		JLabel labelTelefone = new JLabel("TELEFONE");
-		labelTelefone.setBounds(562, 406, 253, 14);
-		labelTelefone.setForeground(SystemColor.textInactiveText);
+		labelTelefone.setBounds(560, 406, 253, 14);
+		labelTelefone.setForeground(SystemColor.textHighlight);
 		labelTelefone.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		contentPane.add(labelTelefone);
 		
@@ -249,7 +250,7 @@ public class RegistroHospede extends JFrame {
 		
 		JLabel labelNumReserva = new JLabel("NÚMERO DE RESERVA");
 		labelNumReserva.setBounds(558, 474, 253, 14);
-		labelNumReserva.setForeground(SystemColor.textInactiveText);
+		labelNumReserva.setForeground(SystemColor.textHighlight);
 		labelNumReserva.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		contentPane.add(labelNumReserva);
 		
@@ -259,7 +260,7 @@ public class RegistroHospede extends JFrame {
 		separatorNome.setBackground(new Color(12, 138, 199));
 		contentPane.add(separatorNome);
 		
-		JSeparator separatorSobrenome= new JSeparator();
+		JSeparator separatorSobrenome = new JSeparator();
 		separatorSobrenome.setBounds(560, 240, 289, 2);
 		separatorSobrenome.setForeground(new Color(12, 138, 199));
 		separatorSobrenome.setBackground(new Color(12, 138, 199));
@@ -306,6 +307,14 @@ public class RegistroHospede extends JFrame {
 					ConexaoDB conexao = new ConexaoDB();
 					statusRegistroReserva = conexao.insertReservaDB(idReserva, dataEntrada, dataSaida, valorDaReserva, formaPagamento);
 					statusRegistroHospede = conexao.insertHospedeDB(idHospede, campoNome.getText(), campoSobrenome.getText(), dataNascimento, (String) nacionalidade.getSelectedItem(), campoTelefone.getText(), idReserva);
+					
+					if((statusRegistroReserva == true) && (statusRegistroHospede == true)) {
+						Sucesso msgSucesso = new Sucesso();
+						msgSucesso.setVisible(true);
+						dispose();
+					} else {
+						System.out.println("Ops! parece que ocorreu um erro");
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
 				}
@@ -347,7 +356,7 @@ public class RegistroHospede extends JFrame {
 			int indice;
 		
 			for(int i = 0; i < TAMANHO_CODIGO; i++) {
-				indice = (int) Math.round(Math.random()*caracteres.length);
+				indice = (int) Math.round(Math.random()*(caracteres.length - 1));
 				codigoGerado += caracteres[indice];
 			}
 		
