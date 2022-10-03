@@ -9,12 +9,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.text.Format;
+import java.text.SimpleDateFormat;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -22,6 +24,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
+
+import jdbc.ConexaoDB;
 
 @SuppressWarnings("serial")
 public class RegistroHospede extends JFrame {
@@ -35,7 +39,15 @@ public class RegistroHospede extends JFrame {
 	private JComboBox<Format> nacionalidade;
 	private JLabel labelExit;
 	private JLabel labelBtnAtras;
-	int xMouse, yMouse;
+	private int TAMANHO_CODIGO = 8;
+	private int xMouse, yMouse;
+	
+	ReservasView registroDeReserva = new ReservasView();
+	private String idReserva = registroDeReserva.getCodigoReserva();
+	private String dataEntrada = registroDeReserva.getDataEntrada();
+	private String dataSaida = registroDeReserva.getDataSaida();
+	private float valorDaReserva = registroDeReserva.getValor();
+	private String formaPagamento = registroDeReserva.getFormaPagamento();
 	
 	public static void main(String[] args) {
 		
@@ -139,7 +151,6 @@ public class RegistroHospede extends JFrame {
 				labelBtnAtras.setForeground(Color.BLACK);
 			}
 		});
-		
 		btnAtras.setLayout(null);
 		btnAtras.setBackground(Color.WHITE);
 		btnAtras.setBounds(0, 0, 53, 36);
@@ -189,6 +200,7 @@ public class RegistroHospede extends JFrame {
 		numeroReserva.setColumns(10);
 		numeroReserva.setBackground(Color.WHITE);
 		numeroReserva.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		numeroReserva.setText(idReserva);
 		contentPane.add(numeroReserva);
 		
 		nacionalidade = new JComboBox<>();
@@ -283,8 +295,20 @@ public class RegistroHospede extends JFrame {
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//String id_reserva = new ReservasView().getCodigoReserva();
-				//System.out.println("ID de reserva: "+id_reserva);
+				
+				boolean statusRegistroReserva;
+				boolean statusRegistroHospede;
+				
+				if(campoNome.getText() != null && campoSobrenome.getText() != null && campoDataNascimento.getDate() != null && campoTelefone.getText() != null) {
+					
+					String dataNascimento = new SimpleDateFormat("yyyy-MM-dd").format(campoDataNascimento.getDate());
+					String idHospede = geradorCodigo();
+					ConexaoDB conexao = new ConexaoDB();
+					statusRegistroReserva = conexao.insertReservaDB(idReserva, dataEntrada, dataSaida, valorDaReserva, formaPagamento);
+					statusRegistroHospede = conexao.insertHospedeDB(idHospede, campoNome.getText(), campoSobrenome.getText(), dataNascimento, (String) nacionalidade.getSelectedItem(), campoTelefone.getText(), idReserva);
+				} else {
+					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
+				}
 			}
 		});
 		btnSalvar.setLayout(null);
@@ -316,6 +340,19 @@ public class RegistroHospede extends JFrame {
 		logo.setIcon(new ImageIcon(RegistroHospede.class.getResource("/img/hotel_100px.png")));
 	}
 	
+		private String geradorCodigo() {
+			
+			String codigoGerado = "";
+			String[] caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split("");
+			int indice;
+		
+			for(int i = 0; i < TAMANHO_CODIGO; i++) {
+				indice = (int) Math.round(Math.random()*caracteres.length);
+				codigoGerado += caracteres[indice];
+			}
+		
+			return codigoGerado;
+		}
 	private void headerMousePressed(java.awt.event.MouseEvent event) {
 		xMouse = event.getX();
 		yMouse = event.getY();

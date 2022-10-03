@@ -8,7 +8,6 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.Format;
@@ -29,10 +28,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
 import com.toedter.calendar.JDateChooser;
-
-import jdbc.ConexaoDB;
 
 @SuppressWarnings("serial")
 public class ReservasView extends JFrame{
@@ -41,14 +37,14 @@ public class ReservasView extends JFrame{
 	private int TAMANHO_CODIGO = 12;
 	private static String codigoReserva;
 	private JPanel contentPane;
-	private float valor;
+	private static float valor;
 	private JTextField campoValor;
 	private JDateChooser campoDataEntrada;
-	private String dataEntrada;
+	private static String dataEntrada;
 	private JDateChooser campoDataSaida;
-	private String dataSaida;
-	private JComboBox<Format> formaPagamento;
-	private String formaPagam;
+	private static String dataSaida;
+	private JComboBox<Format> boxFormaPagamento;
+	private static String formaPagamento;
 	int xMouse, yMouse;
 	private JLabel labelExit;
 	private JLabel labelValorSimbolo;
@@ -190,13 +186,13 @@ public class ReservasView extends JFrame{
 		labelValor.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		panel.add(labelValor);
 		
-		formaPagamento = new JComboBox();
-		formaPagamento.setBounds(68, 417, 289, 38);
-		formaPagamento.setBackground(SystemColor.text);
-		formaPagamento.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
-		formaPagamento.setFont(new Font("Roboto", Font.PLAIN, 16));
-		formaPagamento.setModel(new DefaultComboBoxModel(new String[] {"Cartão de Crédito", "Cartão de Débito", "Dinheiro"}));
-		panel.add(formaPagamento);
+		boxFormaPagamento = new JComboBox();
+		boxFormaPagamento.setBounds(68, 417, 289, 38);
+		boxFormaPagamento.setBackground(SystemColor.text);
+		boxFormaPagamento.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
+		boxFormaPagamento.setFont(new Font("Roboto", Font.PLAIN, 16));
+		boxFormaPagamento.setModel(new DefaultComboBoxModel(new String[] {"Cartão de Crédito", "Cartão de Débito", "Dinheiro"}));
+		panel.add(boxFormaPagamento);
 		
 		JLabel labelFormaPagamento = new JLabel("FORMA DE PAGAMENTO");
 		labelFormaPagamento.setForeground(SystemColor.textHighlight);
@@ -308,24 +304,15 @@ public class ReservasView extends JFrame{
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				boolean result;
 				
 				if(campoDataEntrada.getDate() != null && campoDataEntrada.getDate() != null) {
 					
 					codigoReserva = geradorCodigo();
-					formaPagam = (String) formaPagamento.getSelectedItem();
+					formaPagamento = (String) boxFormaPagamento.getSelectedItem();
 					
-					ConexaoDB connect = new ConexaoDB();
-					System.out.println("Carregando...");
-					result = connect.insertReservaDB(codigoReserva, dataEntrada, dataSaida, valor, formaPagam);
-					
-					if(!result) {
-						RegistroHospede registroHospede = new RegistroHospede();
-						registroHospede.setVisible(true);
-						dispose();
-					} else {
-						System.out.println("Erro ao inserir no banco de dados");
-					}
+					RegistroHospede registroHospede = new RegistroHospede();
+					registroHospede.setVisible(true);
+					dispose();
 					
 				} else {
 					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
@@ -359,6 +346,22 @@ public class ReservasView extends JFrame{
 		}
 		
 		return codigoGerado;
+	}
+	
+	public float getValor() {
+		return valor;
+	}
+	
+	public String getDataEntrada() {
+		return dataEntrada;
+	}
+	
+	public String getDataSaida() {
+		return dataSaida;
+	}
+	
+	public String getFormaPagamento() {
+		return formaPagamento;
 	}
 	
 	public String getCodigoReserva() {

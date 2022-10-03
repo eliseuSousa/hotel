@@ -13,6 +13,7 @@ public class ConexaoDB {
 	
 	public boolean insertReservaDB(String idReserva, String dataE, String dataS, float valor, String formaPagamento) {
 		
+		boolean retornaStatus = false;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conexao = DriverManager.getConnection(url, user, password);
@@ -34,7 +35,7 @@ public class ConexaoDB {
 			ps.setFloat(4, valor);
 			ps.setString(5, formaPagamento);
 			
-			return ps.execute();
+			retornaStatus = ps.execute();
 		} 
 		catch(ClassNotFoundException e) {
 			System.out.println("Driver não encontrado");
@@ -44,9 +45,13 @@ public class ConexaoDB {
 			System.out.println("Ocorreu um erro com o banco de dados: "+e.getMessage());
 			return false;
 		}
+		
+		return retornaStatus;
 	}
 	
-	public void insertHospedeDB(String idHospede, String nome, String sobrenome, String dataNascimento, String nacionalidade, String telefone, String idReserva) {
+	public boolean insertHospedeDB(String idHospede, String nome, String sobrenome, String dataNascimento, String nacionalidade, String telefone, String idReserva) {
+		
+		boolean retornaStatus = false;
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -74,7 +79,7 @@ public class ConexaoDB {
 			ps.setString(6, telefone);
 			ps.setString(7, idReserva);
 			
-			ps.execute();
+			retornaStatus = ps.execute();
 			
 		} 
 		catch(ClassNotFoundException e) {
@@ -83,6 +88,8 @@ public class ConexaoDB {
 		catch (SQLException e) {
 			System.out.println("Ocorreu um erro com o banco de dados: "+e.getMessage());
 		}
+		
+		return retornaStatus;
 	}
 	
 }
