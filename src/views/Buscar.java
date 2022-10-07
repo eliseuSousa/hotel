@@ -22,7 +22,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import model.bean.Hospede;
 import model.bean.Reserva;
+import model.dao.HospedeDAO;
 import model.dao.ReservaDAO;
 
 @SuppressWarnings("serial")
@@ -32,7 +34,7 @@ public class Buscar extends JFrame {
 	private JTextField barraPesqisa;
 	private JTable tabelaHospedes;
 	private JTable tbReservas;
-	private DefaultTableModel modelo;
+	private DefaultTableModel modeloReservas;
 	private DefaultTableModel modeloHospedes;
 	private JLabel labelBtnAtras;
 	private JLabel labelBtnExit;
@@ -78,19 +80,19 @@ public class Buscar extends JFrame {
 		
 		tbReservas = new JTable();
 		JScrollPane barraRolagemTbReservas = new JScrollPane(tbReservas);
-		modelo = (DefaultTableModel) tbReservas.getModel();
-		modelo.addColumn("Numero de Reserva");
-		modelo.addColumn("Data Check In");
-		modelo.addColumn("Data Check Out");
-		modelo.addColumn("Valor");
-		modelo.addColumn("Forma de Pagamento");
+		modeloReservas = (DefaultTableModel) tbReservas.getModel();
+		modeloReservas.addColumn("Numero de Reserva");
+		modeloReservas.addColumn("Data Check In");
+		modeloReservas.addColumn("Data Check Out");
+		modeloReservas.addColumn("Valor");
+		modeloReservas.addColumn("Forma de Pagamento");
 		tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel.addTab("Reservas", new ImageIcon(Buscar.class.getResource("/img/reservado.png")), barraRolagemTbReservas, null);
 		
 		ReservaDAO rdao = new ReservaDAO();
 		for(Reserva r: rdao.read()) {
-			modelo.addRow(new Object[]{
+			modeloReservas.addRow(new Object[]{
 					r.getIdReserva(),
 					r.getDataE(),
 					r.getDataS(),
@@ -112,6 +114,19 @@ public class Buscar extends JFrame {
 		tabelaHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabelaHospedes.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel.addTab("Hóspedes", new ImageIcon(Buscar.class.getResource("/img/pessoas.png")), barraRolagemTbHospedes, null);
+		
+		HospedeDAO hDAO = new HospedeDAO();
+		for(Hospede h: hDAO.read()) {
+			modeloHospedes.addRow(new Object[] {
+				h.getIdHospede(),
+				h.getNome(),
+				h.getSobrenome(),
+				h.getDataNascimento(),
+				h.getNacionalidade(),
+				h.getTelefone(),
+				h.getIdReserva()
+			});
+		}
 		
 		JLabel newLabel = new JLabel("");
 		newLabel.setIcon(new ImageIcon(Buscar.class.getResource("/img/hotel_100px.png")));
