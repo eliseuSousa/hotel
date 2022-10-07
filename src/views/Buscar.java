@@ -1,19 +1,18 @@
 package views;
 
-import java.awt.AWTEventMulticaster;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -23,13 +22,16 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import model.bean.Reserva;
+import model.dao.ReservaDAO;
+
 @SuppressWarnings("serial")
 public class Buscar extends JFrame {
 	
 	private JPanel contentPane;
 	private JTextField barraPesqisa;
 	private JTable tabelaHospedes;
-	private JTable tabelaReservas;
+	private JTable tbReservas;
 	private DefaultTableModel modelo;
 	private DefaultTableModel modeloHospedes;
 	private JLabel labelBtnAtras;
@@ -74,29 +76,42 @@ public class Buscar extends JFrame {
 		panel.setBounds(20, 169, 865, 328);
 		contentPane.add(panel);
 		
-		tabelaReservas = new JTable();
-		tabelaReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tabelaReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
-		panel.addTab("Reservas", new ImageIcon(Buscar.class.getResource("/img/reservado.png")), tabelaReservas, null);
-		modelo = (DefaultTableModel) tabelaReservas.getModel();
-		modelo.addColumn("Número de Reserva");
-		modelo.addColumn("Data de Check In");
-		modelo.addColumn("Data de Check Out");
+		tbReservas = new JTable();
+		JScrollPane barraRolagemTbReservas = new JScrollPane(tbReservas);
+		modelo = (DefaultTableModel) tbReservas.getModel();
+		modelo.addColumn("Numero de Reserva");
+		modelo.addColumn("Data Check In");
+		modelo.addColumn("Data Check Out");
 		modelo.addColumn("Valor");
-		modelo.addColumn("Forma de pagamento");
+		modelo.addColumn("Forma de Pagamento");
+		tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
+		panel.addTab("Reservas", new ImageIcon(Buscar.class.getResource("/img/reservado.png")), barraRolagemTbReservas, null);
+		
+		ReservaDAO rdao = new ReservaDAO();
+		for(Reserva r: rdao.read()) {
+			modelo.addRow(new Object[]{
+					r.getIdReserva(),
+					r.getDataE(),
+					r.getDataS(),
+					r.getValor(),
+					r.getFormaPagamento()
+			});
+		}
 		
 		tabelaHospedes = new JTable();
-		tabelaHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tabelaHospedes.setFont(new Font("Roboto", Font.PLAIN, 16));
-		panel.addTab("Hóspedes", new ImageIcon(Buscar.class.getResource("/img/pessoas.png")), tabelaHospedes, null);
+		JScrollPane barraRolagemTbHospedes = new JScrollPane(tabelaHospedes); 
 		modeloHospedes = (DefaultTableModel) tabelaHospedes.getModel();
-		modeloHospedes.addColumn("Número de hóspede");
+		modeloHospedes.addColumn("ID hóspede");
 		modeloHospedes.addColumn("Nome");
 		modeloHospedes.addColumn("Sobrenome");
-		modeloHospedes.addColumn("Data de nascimento");
+		modeloHospedes.addColumn("Data de nasc.");
 		modeloHospedes.addColumn("Nacionalidade");
 		modeloHospedes.addColumn("Telefone");
-		modeloHospedes.addColumn("Número de reserva");
+		modeloHospedes.addColumn("ID reserva");
+		tabelaHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tabelaHospedes.setFont(new Font("Roboto", Font.PLAIN, 16));
+		panel.addTab("Hóspedes", new ImageIcon(Buscar.class.getResource("/img/pessoas.png")), barraRolagemTbHospedes, null);
 		
 		JLabel newLabel = new JLabel("");
 		newLabel.setIcon(new ImageIcon(Buscar.class.getResource("/img/hotel_100px.png")));

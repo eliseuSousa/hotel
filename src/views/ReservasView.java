@@ -30,6 +30,9 @@ import javax.swing.border.LineBorder;
 
 import com.toedter.calendar.JDateChooser;
 
+import model.bean.Reserva;
+import model.dao.ReservaDAO;
+
 @SuppressWarnings("serial")
 public class ReservasView extends JFrame{
 
@@ -309,9 +312,17 @@ public class ReservasView extends JFrame{
 					
 					codigoReserva = geradorCodigo();
 					formaPagamento = (String) boxFormaPagamento.getSelectedItem();
-					
-					RegistroHospede registroHospede = new RegistroHospede();
-					registroHospede.setVisible(true);
+
+					Reserva reserva = new Reserva();
+					ReservaDAO reservaDAO = new ReservaDAO();
+					reserva.setIdReserva(codigoReserva);
+					reserva.setDataE(dataEntrada);
+					reserva.setDataS(dataSaida);
+					reserva.setValor(valor);
+					reserva.setFormaPagamento(formaPagamento);
+					reservaDAO.insert(reserva);
+//					RegistroHospede registroHospede = new RegistroHospede();
+//					registroHospede.setVisible(true);
 					dispose();
 					
 				} else {
