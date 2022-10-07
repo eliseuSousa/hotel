@@ -315,12 +315,14 @@ public class ReservasView extends JFrame{
 
 					Reserva reserva = new Reserva();
 					ReservaDAO reservaDAO = new ReservaDAO();
+					
 					reserva.setIdReserva(codigoReserva);
 					reserva.setDataE(dataEntrada);
 					reserva.setDataS(dataSaida);
 					reserva.setValor(valor);
 					reserva.setFormaPagamento(formaPagamento);
 					reservaDAO.insert(reserva);
+					
 //					RegistroHospede registroHospede = new RegistroHospede();
 //					registroHospede.setVisible(true);
 					dispose();

@@ -25,7 +25,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 
-import jdbc.ConexaoDB;
+import model.bean.Hospede;
+import model.dao.HospedeDAO;
 
 @SuppressWarnings("serial")
 public class RegistroHospede extends JFrame {
@@ -304,11 +305,21 @@ public class RegistroHospede extends JFrame {
 					
 					String dataNascimento = new SimpleDateFormat("yyyy-MM-dd").format(campoDataNascimento.getDate());
 					String idHospede = geradorCodigo();
-					ConexaoDB conexao = new ConexaoDB();
-					statusRegistroReserva = conexao.insertReservaDB(idReserva, dataEntrada, dataSaida, valorDaReserva, formaPagamento);
-					statusRegistroHospede = conexao.insertHospedeDB(idHospede, campoNome.getText(), campoSobrenome.getText(), dataNascimento, (String) nacionalidade.getSelectedItem(), campoTelefone.getText(), idReserva);
 					
-					if((statusRegistroReserva == true) && (statusRegistroHospede == true)) {
+					Hospede h = new Hospede();
+					HospedeDAO hDAO = new HospedeDAO();
+					
+					h.setIdHospede(idHospede);
+					h.setNome(campoNome.getText());
+					h.setSobrenome(campoSobrenome.getText());
+					h.setDataNascimento(dataNascimento);
+					h.setNacionalidade((String) nacionalidade.getSelectedItem());
+					h.setTelefone(campoTelefone.getText());
+					h.setIdReserva("hafgdj");
+					
+					statusRegistroHospede = hDAO.insert(h);
+//					statusRegistroReserva = conexao.insertReservaDB(idReserva, dataEntrada, dataSaida, valorDaReserva, formaPagamento);					
+					if((statusRegistroHospede)) {
 						Sucesso msgSucesso = new Sucesso();
 						msgSucesso.setVisible(true);
 						dispose();

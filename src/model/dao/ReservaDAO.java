@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 
 import jdbc.ConnectionFactory;
 import model.bean.Reserva;
-import views.Sucesso;
 
 public class ReservaDAO {
 
@@ -39,8 +38,6 @@ public class ReservaDAO {
 			
 			stmt.executeUpdate();
 			
-			Sucesso newView = new Sucesso();
-			newView.setVisible(true);
 		} catch(SQLException e) {
 			JOptionPane.showMessageDialog(null, "Erro ao salvar: "+e.getMessage());
 		} finally {
