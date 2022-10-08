@@ -69,7 +69,8 @@ public class Buscar extends JFrame {
 		
 		JLabel lblTitulo = new JLabel("SISTEMA DE BUSCA");
 		lblTitulo.setForeground(new Color(12, 138, 199));
-		lblTitulo.setBounds(405, 62, 280, 42);
+		lblTitulo.setFont(new Font("Roboto Black", Font.BOLD, 18));
+		lblTitulo.setBounds(375, 48, 280, 42);
 		contentPane.add(lblTitulo);
 		
 		JTabbedPane panel = new JTabbedPane(JTabbedPane.TOP);

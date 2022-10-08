@@ -34,10 +34,10 @@ import model.bean.Reserva;
 import model.dao.ReservaDAO;
 
 @SuppressWarnings("serial")
-public class ReservasView extends JFrame{
+public class RegistroReserva extends JFrame{
 
 	private float TAXA_DIARIA = 60f;
-	private int TAMANHO_CODIGO = 12;
+	private int TAMANHO_CODIGO = 8;
 	private static String codigoReserva;
 	private JPanel contentPane;
 	private static float valor;
@@ -58,15 +58,15 @@ public class ReservasView extends JFrame{
 			
 			@Override
 			public void run() {
-				ReservasView frame = new ReservasView();
+				RegistroReserva frame = new RegistroReserva();
 				frame.setVisible(true);
 			}
 		});
 	}
 	
-	public ReservasView() {
+	public RegistroReserva() {
 		super("Reserva");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ReservasView.class.getResource("/img/hotel_40px.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroReserva.class.getResource("/img/hotel_40px.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 560);
 		contentPane = new JPanel();
@@ -111,7 +111,7 @@ public class ReservasView extends JFrame{
 		
 		campoDataEntrada = new JDateChooser();
 		campoDataEntrada.getCalendarButton().setBackground(new Color(12, 138, 199));
-		campoDataEntrada.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/img/icon-reservas.png")));
+		campoDataEntrada.getCalendarButton().setIcon(new ImageIcon(RegistroReserva.class.getResource("/img/icon-reservas.png")));
 		campoDataEntrada.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 12));
 		campoDataEntrada.setBounds(68, 161, 289, 35);
 		campoDataEntrada.getCalendarButton().setBounds(268, 0, 21, 33);
@@ -142,7 +142,7 @@ public class ReservasView extends JFrame{
 		panel.add(labelCheckOut);
 		
 		campoDataSaida = new JDateChooser();
-		campoDataSaida.getCalendarButton().setIcon(new ImageIcon(ReservasView.class.getResource("/img/icon-reservas.png")));
+		campoDataSaida.getCalendarButton().setIcon(new ImageIcon(RegistroReserva.class.getResource("/img/icon-reservas.png")));
 		campoDataSaida.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
 		campoDataSaida.setBounds(68, 246, 289, 35);
 		campoDataSaida.getCalendarButton().setBounds(267, 1, 21, 31);
@@ -212,11 +212,11 @@ public class ReservasView extends JFrame{
 		JLabel logo = new JLabel("");
 		logo.setBounds(197, 68, 104, 107);
 		panel_1.add(logo);
-		logo.setIcon(new ImageIcon(ReservasView.class.getResource("/img/hotel_100px.png")));
+		logo.setIcon(new ImageIcon(RegistroReserva.class.getResource("/img/hotel_100px.png")));
 		
 		JLabel imgBg = new JLabel("");
 		imgBg.setBounds(0, 140, 500, 409);
-		imgBg.setIcon(new ImageIcon(ReservasView.class.getResource("/img/reservas-img-3.png")));
+		imgBg.setIcon(new ImageIcon(RegistroReserva.class.getResource("/img/reservas-img-3.png")));
 		imgBg.setBackground(Color.WHITE);
 		panel_1.add(imgBg);
 		
@@ -314,17 +314,14 @@ public class ReservasView extends JFrame{
 					formaPagamento = (String) boxFormaPagamento.getSelectedItem();
 
 					Reserva reserva = new Reserva();
-					ReservaDAO reservaDAO = new ReservaDAO();
-					
 					reserva.setIdReserva(codigoReserva);
 					reserva.setDataE(dataEntrada);
 					reserva.setDataS(dataSaida);
 					reserva.setValor(valor);
 					reserva.setFormaPagamento(formaPagamento);
-					reservaDAO.insert(reserva);
 					
-//					RegistroHospede registroHospede = new RegistroHospede();
-//					registroHospede.setVisible(true);
+					RegistroHospede registroHospede = new RegistroHospede(reserva);
+					registroHospede.setVisible(true);
 					dispose();
 					
 				} else {

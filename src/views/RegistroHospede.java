@@ -1,7 +1,6 @@
 package views;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -26,7 +25,9 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 
 import model.bean.Hospede;
+import model.bean.Reserva;
 import model.dao.HospedeDAO;
+import model.dao.ReservaDAO;
 
 @SuppressWarnings("serial")
 public class RegistroHospede extends JFrame {
@@ -43,26 +44,7 @@ public class RegistroHospede extends JFrame {
 	private int TAMANHO_CODIGO = 8;
 	private int xMouse, yMouse;
 	
-	ReservasView registroDeReserva = new ReservasView();
-	private String idReserva = registroDeReserva.getCodigoReserva();
-	private String dataEntrada = registroDeReserva.getDataEntrada();
-	private String dataSaida = registroDeReserva.getDataSaida();
-	private float valorDaReserva = registroDeReserva.getValor();
-	private String formaPagamento = registroDeReserva.getFormaPagamento();
-	
-	public static void main(String[] args) {
-		
-		EventQueue.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				RegistroHospede frame = new RegistroHospede();
-				frame.setVisible(true);
-			}
-		});
-	}
-	
-	public RegistroHospede() {
+	public RegistroHospede(Reserva reserva) {
 		super("Hóspede");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHospede.class.getResource("/img/LOGO_50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -202,7 +184,7 @@ public class RegistroHospede extends JFrame {
 		numeroReserva.setColumns(10);
 		numeroReserva.setBackground(Color.WHITE);
 		numeroReserva.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		numeroReserva.setText(idReserva);
+		numeroReserva.setText(reserva.getIdReserva());
 		contentPane.add(numeroReserva);
 		
 		nacionalidade = new JComboBox<>();
@@ -308,6 +290,7 @@ public class RegistroHospede extends JFrame {
 					
 					Hospede h = new Hospede();
 					HospedeDAO hDAO = new HospedeDAO();
+					ReservaDAO rDAO = new ReservaDAO();
 					
 					h.setIdHospede(idHospede);
 					h.setNome(campoNome.getText());
@@ -315,11 +298,15 @@ public class RegistroHospede extends JFrame {
 					h.setDataNascimento(dataNascimento);
 					h.setNacionalidade((String) nacionalidade.getSelectedItem());
 					h.setTelefone(campoTelefone.getText());
-					h.setIdReserva("hafgdj");
+					h.setIdReserva(reserva.getIdReserva());
 					
 					statusRegistroHospede = hDAO.insert(h);
-//					statusRegistroReserva = conexao.insertReservaDB(idReserva, dataEntrada, dataSaida, valorDaReserva, formaPagamento);					
-					if((statusRegistroHospede)) {
+					statusRegistroReserva = rDAO.insert(reserva);
+					
+					System.out.println("Hospede: "+statusRegistroHospede);
+					System.out.println("Reserva: "+statusRegistroReserva);
+					
+					if(statusRegistroHospede && statusRegistroReserva) {
 						Sucesso msgSucesso = new Sucesso();
 						msgSucesso.setVisible(true);
 						dispose();

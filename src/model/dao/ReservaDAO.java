@@ -14,9 +14,10 @@ import model.bean.Reserva;
 
 public class ReservaDAO {
 
-	public void insert(Reserva r) {
+	public boolean insert(Reserva r) {
 		Connection conn = ConnectionFactory.getConnection();
 		PreparedStatement stmt = null;
+		boolean status = false;
 		
 		String sql = "INSERT INTO HOTEL.RESERVAS("
 				+ "ID_RESERVA,"
@@ -38,11 +39,15 @@ public class ReservaDAO {
 			
 			stmt.executeUpdate();
 			
+			status = true;
+			
 		} catch(SQLException e) {
 			JOptionPane.showMessageDialog(null, "Erro ao salvar: "+e.getMessage());
 		} finally {
 			ConnectionFactory.closeConnection(conn, stmt);
 		}
+		
+		return status;
 	}
 	
 	public List<Reserva> read() {
