@@ -79,7 +79,12 @@ public class Buscar extends JFrame {
 		panel.setBounds(20, 169, 865, 328);
 		contentPane.add(panel);
 		
-		tbReservas = new JTable();
+		tbReservas = new JTable() {
+			@Override
+			public boolean isCellEditable(int rowIndex, int ColIndex) {
+				return false;
+			}
+		};
 		JScrollPane barraRolagemTbReservas = new JScrollPane(tbReservas);
 		modeloReservas = (DefaultTableModel) tbReservas.getModel();
 		modeloReservas.addColumn("Numero de Reserva");
@@ -87,6 +92,7 @@ public class Buscar extends JFrame {
 		modeloReservas.addColumn("Data Check Out");
 		modeloReservas.addColumn("Valor");
 		modeloReservas.addColumn("Forma de Pagamento");
+		tbReservas.getColumnModel().getColumn(0).setCellEditor(null);
 		tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel.addTab("Reservas", new ImageIcon(Buscar.class.getResource("/img/reservado.png")), barraRolagemTbReservas, null);
@@ -102,7 +108,12 @@ public class Buscar extends JFrame {
 			});
 		}
 		
-		tabelaHospedes = new JTable();
+		tabelaHospedes = new JTable() {
+			@Override
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				return false;
+			}
+		};
 		JScrollPane barraRolagemTbHospedes = new JScrollPane(tabelaHospedes); 
 		modeloHospedes = (DefaultTableModel) tabelaHospedes.getModel();
 		modeloHospedes.addColumn("ID hóspede");

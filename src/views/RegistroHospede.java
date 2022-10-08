@@ -303,9 +303,6 @@ public class RegistroHospede extends JFrame {
 					statusRegistroHospede = hDAO.insert(h);
 					statusRegistroReserva = rDAO.insert(reserva);
 					
-					System.out.println("Hospede: "+statusRegistroHospede);
-					System.out.println("Reserva: "+statusRegistroReserva);
-					
 					if(statusRegistroHospede && statusRegistroReserva) {
 						Sucesso msgSucesso = new Sucesso();
 						msgSucesso.setVisible(true);
