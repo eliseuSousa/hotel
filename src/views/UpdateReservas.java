@@ -31,13 +31,12 @@ import javax.swing.border.LineBorder;
 import com.toedter.calendar.JDateChooser;
 
 import model.bean.Reserva;
+import model.dao.ReservaDAO;
 
 @SuppressWarnings("serial")
-public class RegistroReserva extends JFrame{
+public class UpdateReservas extends JFrame{
 
 	private float TAXA_DIARIA = 60f;
-	private int TAMANHO_CODIGO = 8;
-	private String codigoReserva;
 	private JPanel contentPane;
 	private float valor;
 	private JTextField campoValor;
@@ -63,8 +62,8 @@ public class RegistroReserva extends JFrame{
 		});
 	}
 	
-	public RegistroReserva() {
-		super("Reserva");
+	public UpdateReservas(Reserva registroReserva) {
+		super("Editar");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroReserva.class.getResource("/img/hotel_40px.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 560);
@@ -84,7 +83,7 @@ public class RegistroReserva extends JFrame{
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JSeparator separatorCheckIn= new JSeparator();
+		JSeparator separatorCheckIn = new JSeparator();
 		separatorCheckIn.setForeground(new Color(12, 138, 199));
 		separatorCheckIn.setBackground(new Color(12, 138, 199));
 		separatorCheckIn.setBounds(68, 195, 289, 2);
@@ -116,29 +115,15 @@ public class RegistroReserva extends JFrame{
 		campoDataEntrada.getCalendarButton().setBounds(268, 0, 21, 33);
 		campoDataEntrada.setBackground(Color.WHITE);
 		campoDataEntrada.setBorder(new LineBorder(SystemColor.window));
-		campoDataEntrada.setDateFormatString("dd/MM/yyyy");
 		campoDataEntrada.setFont(new Font("Roboto", Font.PLAIN, 18));
+		campoDataEntrada.setDateFormatString("dd/MM/yyyy");
 		panel.add(campoDataEntrada);
-		
-		labelValorSimbolo = new JLabel("R$");
-		labelValorSimbolo.setVisible(true);
-		labelValorSimbolo.setBounds(68, 332, 28, 25);
-		labelValorSimbolo.setBackground(new Color(12, 138, 199));
-		labelValorSimbolo.setForeground(new Color(12, 138, 199));
-		labelValorSimbolo.setFont(new Font("Roboto", Font.BOLD, 17));
-		panel.add(labelValorSimbolo);
 		
 		JLabel labelCheckIn = new JLabel("DATA DE CHECK IN");
 		labelCheckIn.setBackground(SystemColor.textInactiveText);
 		labelCheckIn.setBounds(68, 136, 200, 14);
 		labelCheckIn.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		panel.add(labelCheckIn);
-		
-		JLabel labelCheckOut = new JLabel("DATA DE CHECK OUT");
-		labelCheckOut.setBackground(SystemColor.textHighlight);
-		labelCheckOut.setBounds(68, 221, 220, 14);
-		labelCheckOut.setFont(new Font("Roboto Black", Font.BOLD, 18));
-		panel.add(labelCheckOut);
 		
 		campoDataSaida = new JDateChooser();
 		campoDataSaida.getCalendarButton().setIcon(new ImageIcon(RegistroReserva.class.getResource("/img/icon-reservas.png")));
@@ -148,6 +133,12 @@ public class RegistroReserva extends JFrame{
 		campoDataSaida.setBackground(new Color(12, 138, 199));
 		campoDataSaida.getCalendarButton().setBackground(new Color(12, 138, 199));
 		campoDataSaida.setFont(new Font("Roboto", Font.PLAIN, 18));
+		
+		JLabel labelCheckOut = new JLabel("DATA DE CHECK OUT");
+		labelCheckOut.setBackground(SystemColor.textHighlight);
+		labelCheckOut.setBounds(68, 221, 220, 14);
+		labelCheckOut.setFont(new Font("Roboto Black", Font.BOLD, 18));
+		panel.add(labelCheckOut);
 		
 		campoDataSaida.addPropertyChangeListener(new PropertyChangeListener() {
 			
@@ -180,7 +171,16 @@ public class RegistroReserva extends JFrame{
 		campoValor.setFont(new Font("Roboto Black", Font.BOLD, 17));
 		campoValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		campoValor.setColumns(10);
+		campoValor.setText(String.valueOf(registroReserva.getValor()));
 		panel.add(campoValor);
+		
+		labelValorSimbolo = new JLabel("R$");
+		labelValorSimbolo.setVisible(true);
+		labelValorSimbolo.setBounds(68, 332, 28, 25);
+		labelValorSimbolo.setBackground(new Color(12, 138, 199));
+		labelValorSimbolo.setForeground(new Color(12, 138, 199));
+		labelValorSimbolo.setFont(new Font("Roboto", Font.BOLD, 17));
+		panel.add(labelValorSimbolo);
 		
 		JLabel labelValor = new JLabel("VALOR DA RESERVA");
 		labelValor.setForeground(SystemColor.textHighlight);
@@ -194,6 +194,7 @@ public class RegistroReserva extends JFrame{
 		boxFormaPagamento.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
 		boxFormaPagamento.setFont(new Font("Roboto", Font.PLAIN, 16));
 		boxFormaPagamento.setModel(new DefaultComboBoxModel(new String[] {"Cartão de Crédito", "Cartão de Débito", "Dinheiro"}));
+		boxFormaPagamento.setSelectedItem(registroReserva.getFormaPagamento());
 		panel.add(boxFormaPagamento);
 		
 		JLabel labelFormaPagamento = new JLabel("FORMA DE PAGAMENTO");
@@ -301,27 +302,38 @@ public class RegistroReserva extends JFrame{
 		labelAtras.setHorizontalAlignment(SwingConstants.CENTER);
 		labelAtras.setFont(new Font("Roboto", Font.PLAIN, 23));
 		
-		JPanel btnNext = new JPanel();
-		btnNext.addMouseListener(new MouseAdapter() {
+		JPanel btnSalvar = new JPanel();
+		btnSalvar.addMouseListener(new MouseAdapter() {
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
 				if(campoDataEntrada.getDate() != null && campoDataEntrada.getDate() != null) {
 					
-					codigoReserva = geradorCodigo();
 					formaPagamento = (String) boxFormaPagamento.getSelectedItem();
 
-					Reserva reserva = new Reserva();
-					reserva.setIdReserva(codigoReserva);
-					reserva.setDataE(dataEntrada);
-					reserva.setDataS(dataSaida);
-					reserva.setValor(valor);
-					reserva.setFormaPagamento(formaPagamento);
+					Reserva reservaAtualizado = new Reserva();
 					
-					RegistroHospede registroHospede = new RegistroHospede(reserva);
-					registroHospede.setVisible(true);
+					reservaAtualizado.setIdReserva(registroReserva.getIdReserva());
+					reservaAtualizado.setDataE(dataEntrada);
+					reservaAtualizado.setDataS(dataSaida);
+					reservaAtualizado.setValor(valor);
+					reservaAtualizado.setFormaPagamento(formaPagamento);
+					
+					ReservaDAO rDAO = new ReservaDAO();
+					boolean statusReservasUpdate;
+					
+					statusReservasUpdate = rDAO.update(reservaAtualizado);
+					
+					
+					if(statusReservasUpdate) {
+						Buscar tabelas = new Buscar();
+						tabelas.setVisible(true);
+					}
+					
 					dispose();
+//					RegistroHospede registroHospede = new RegistroHospede(reserva);
+//					registroHospede.setVisible(true);
 					
 				} else {
 					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
@@ -329,32 +341,18 @@ public class RegistroReserva extends JFrame{
 		 	}
 		});
 		
-		btnNext.setLayout(null);
-		btnNext.setBackground(new Color(12, 138, 199));
-		btnNext.setBounds(238, 473, 122, 35);
-		panel.add(btnNext);
-		btnNext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnSalvar.setLayout(null);
+		btnSalvar.setBackground(new Color(12, 138, 199));
+		btnSalvar.setBounds(238, 473, 122, 35);
+		panel.add(btnSalvar);
+		btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		
-		JLabel lblBtnNext= new JLabel("PRÓXIMO");
-		lblBtnNext.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBtnNext.setForeground(Color.WHITE);
-		lblBtnNext.setFont(new Font("Roboto", Font.PLAIN, 18));
-		lblBtnNext.setBounds(0, 0, 122, 35);
-		btnNext.add(lblBtnNext);
-	}
-	
-	private String geradorCodigo() {
-		
-		String codigoGerado = "";
-		String[] caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split("");
-		int indice;
-		
-		for(int i = 0; i < TAMANHO_CODIGO; i++) {
-			indice = (int) Math.round(Math.random()*(caracteres.length - 1));
-			codigoGerado += caracteres[indice];
-		}
-		
-		return codigoGerado;
+		JLabel lblBtnSalvar= new JLabel("SALVAR");
+		lblBtnSalvar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBtnSalvar.setForeground(Color.WHITE);
+		lblBtnSalvar.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblBtnSalvar.setBounds(0, 0, 122, 35);
+		btnSalvar.add(lblBtnSalvar);
 	}
 	
 	private void headerMousePressed(java.awt.event.MouseEvent event) {

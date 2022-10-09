@@ -70,7 +70,7 @@ public class Buscar extends JFrame {
 		JLabel lblTitulo = new JLabel("SISTEMA DE BUSCA");
 		lblTitulo.setForeground(new Color(12, 138, 199));
 		lblTitulo.setFont(new Font("Roboto Black", Font.BOLD, 18));
-		lblTitulo.setBounds(375, 48, 280, 42);
+		lblTitulo.setBounds(368, 48, 280, 42);
 		contentPane.add(lblTitulo);
 		
 		JTabbedPane panel = new JTabbedPane(JTabbedPane.TOP);
@@ -267,6 +267,40 @@ public class Buscar extends JFrame {
 		btnEditar.setBackground(new Color(12, 138, 199));
 		btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		btnEditar.setBounds(635, 508, 122, 35);
+		btnEditar.addMouseListener(new MouseAdapter() {
+					
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int tabelaAtiva = panel.getSelectedIndex();
+				
+				if(tabelaAtiva == 0) {
+					
+					if(tbReservas.getSelectedRow() != -1) {
+						
+						Reserva reserva = new Reserva();
+						
+						reserva.setIdReserva(tbReservas.getValueAt(tbReservas.getSelectedRow(), 0).toString());
+						reserva.setDataE(tbReservas.getValueAt(tbReservas.getSelectedRow(), 1).toString());
+						reserva.setDataS(tbReservas.getValueAt(tbReservas.getSelectedRow(),2).toString());
+						reserva.setValor((float) tbReservas.getValueAt(tbReservas.getSelectedRow(), 3));
+						reserva.setFormaPagamento(tbReservas.getValueAt(tbReservas.getSelectedRow(), 4).toString());
+						
+						UpdateReservas updateReserva = new UpdateReservas(reserva);
+						updateReserva.setVisible(true);
+						
+						dispose();
+						
+					} else {
+						System.out.println("Selecione uma linha");
+					}
+					
+				} else if(tabelaAtiva == 1) {
+					
+				} else {
+					System.out.print("Algo inesperado aconteceu.");
+				}
+			}
+		});
 		contentPane.add(btnEditar);
 		
 		JLabel labelBtnEditar = new JLabel("EDITAR");

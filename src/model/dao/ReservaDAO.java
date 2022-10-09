@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.xml.stream.events.EntityReference;
 
 import jdbc.ConnectionFactory;
 import model.bean.Reserva;
@@ -81,5 +82,39 @@ public class ReservaDAO {
 		}
 		
 		return reservas;
+	}
+	
+	public boolean update(Reserva r) {
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		boolean status = false;
+		
+		String sql = "UPDATE HOTEL.RESERVAS SET "
+				+ "DATA_ENTRADA = ?,"
+				+ "DATA_SAIDA = ?,"
+				+ "VALOR = ?,"
+				+ "FORMA_PAGAMENTO = ? "
+				+ "WHERE ID_RESERVA = ?;";
+		
+		try {
+			
+			stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, r.getDataE());
+			stmt.setString(2, r.getDataS());
+			stmt.setFloat(3, r.getValor());
+			stmt.setString(4, r.getFormaPagamento());
+			stmt.setString(5, r.getIdReserva());
+			
+			stmt.executeUpdate();
+			status = true;
+			
+		} catch(SQLException e) {
+			System.out.println("Problema ao executar o sql: "+e.getMessage());
+		} finally {
+			ConnectionFactory.closeConnection(conn, stmt);
+		}
+		
+		return status;
 	}
 }
