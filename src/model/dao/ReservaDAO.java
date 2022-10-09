@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
-import javax.xml.stream.events.EntityReference;
 
 import jdbc.ConnectionFactory;
 import model.bean.Reserva;

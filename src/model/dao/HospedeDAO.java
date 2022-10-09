@@ -89,4 +89,41 @@ public class HospedeDAO {
 		
 		return hospedes;
 	}
+
+	public boolean update(Hospede h) {
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		boolean status = false;
+		
+		String sql = "UPDATE HOTEL.HOSPEDES SET "
+				+ "NOME = ?,"
+				+ "SOBRENOME = ?,"
+				+ "DATA_NASCIMENTO = ?,"
+				+ "NACIONALIDADE = ?,"
+				+ "TELEFONE = ? "
+				+ "WHERE ID_HOSPEDE = ?;";
+		
+		try {
+			
+			stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, h.getNome());
+			stmt.setString(2, h.getSobrenome());
+			stmt.setString(3, h.getDataNascimento());
+			stmt.setString(4, h.getNacionalidade());
+			stmt.setString(5, h.getTelefone());
+			stmt.setString(6, h.getIdHospede());
+			
+			stmt.executeUpdate();
+			
+			status = true;
+			
+		} catch (SQLException e) {
+			System.out.println("Erro ao atualizar hóspede: "+e.getMessage());
+		} finally {
+			ConnectionFactory.closeConnection(conn, stmt);
+		}
+		
+		return status;
+	}
 }

@@ -32,7 +32,7 @@ public class Buscar extends JFrame {
 	
 	private JPanel contentPane;
 	private JTextField barraPesqisa;
-	private JTable tabelaHospedes;
+	private JTable tbHospedes;
 	private JTable tbReservas;
 	private DefaultTableModel modeloReservas;
 	private DefaultTableModel modeloHospedes;
@@ -108,14 +108,14 @@ public class Buscar extends JFrame {
 			});
 		}
 		
-		tabelaHospedes = new JTable() {
+		tbHospedes = new JTable() {
 			@Override
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false;
 			}
 		};
-		JScrollPane barraRolagemTbHospedes = new JScrollPane(tabelaHospedes); 
-		modeloHospedes = (DefaultTableModel) tabelaHospedes.getModel();
+		JScrollPane barraRolagemTbHospedes = new JScrollPane(tbHospedes); 
+		modeloHospedes = (DefaultTableModel) tbHospedes.getModel();
 		modeloHospedes.addColumn("ID hóspede");
 		modeloHospedes.addColumn("Nome");
 		modeloHospedes.addColumn("Sobrenome");
@@ -123,8 +123,8 @@ public class Buscar extends JFrame {
 		modeloHospedes.addColumn("Nacionalidade");
 		modeloHospedes.addColumn("Telefone");
 		modeloHospedes.addColumn("ID reserva");
-		tabelaHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tabelaHospedes.setFont(new Font("Roboto", Font.PLAIN, 16));
+		tbHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tbHospedes.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel.addTab("Hóspedes", new ImageIcon(Buscar.class.getResource("/img/pessoas.png")), barraRolagemTbHospedes, null);
 		
 		HospedeDAO hDAO = new HospedeDAO();
@@ -285,9 +285,8 @@ public class Buscar extends JFrame {
 						reserva.setValor((float) tbReservas.getValueAt(tbReservas.getSelectedRow(), 3));
 						reserva.setFormaPagamento(tbReservas.getValueAt(tbReservas.getSelectedRow(), 4).toString());
 						
-						UpdateReservas updateReserva = new UpdateReservas(reserva);
+						EditarReserva updateReserva = new EditarReserva(reserva);
 						updateReserva.setVisible(true);
-						
 						dispose();
 						
 					} else {
@@ -295,6 +294,26 @@ public class Buscar extends JFrame {
 					}
 					
 				} else if(tabelaAtiva == 1) {
+					
+					if(tbHospedes.getSelectedRow() != -1) {
+						
+						Hospede hospede = new Hospede();
+						
+						hospede.setIdHospede(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 0).toString());
+						hospede.setNome(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 1).toString());
+						hospede.setSobrenome(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 2).toString());
+						hospede.setDataNascimento(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 3).toString());
+						hospede.setNacionalidade(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 4).toString());
+						hospede.setTelefone(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 5).toString());
+						hospede.setIdReserva(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 6).toString());						
+						
+						EditarHospede editarHospede = new EditarHospede(hospede);
+						editarHospede.setVisible(true);
+						dispose();
+						
+					} else {
+						System.out.println("Selecione uma linha.");
+					}
 					
 				} else {
 					System.out.print("Algo inesperado aconteceu.");

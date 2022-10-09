@@ -34,7 +34,7 @@ import model.bean.Reserva;
 import model.dao.ReservaDAO;
 
 @SuppressWarnings("serial")
-public class UpdateReservas extends JFrame{
+public class EditarReserva extends JFrame{
 
 	private float TAXA_DIARIA = 60f;
 	private JPanel contentPane;
@@ -62,7 +62,7 @@ public class UpdateReservas extends JFrame{
 		});
 	}
 	
-	public UpdateReservas(Reserva registroReserva) {
+	public EditarReserva(Reserva registroReserva) {
 		super("Editar");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroReserva.class.getResource("/img/hotel_40px.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
