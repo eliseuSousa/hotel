@@ -336,6 +336,40 @@ public class Buscar extends JFrame {
 		btnDeletar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		contentPane.add(btnDeletar);
 		
+		btnDeletar.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int tbAtiva = panel.getSelectedIndex();
+				if(tbAtiva == 0) {
+					if(tbReservas.getSelectedRow() != -1) {
+						ReservaDAO rDAO = new ReservaDAO();
+						HospedeDAO hDAO = new HospedeDAO();
+						String idReserva = tbReservas.getValueAt(tbReservas.getSelectedRow(), 0).toString();
+						rDAO.delete(idReserva);
+						hDAO.delete(idReserva);
+					} else {
+						System.out.println("Selecione uma linha");
+					}
+				}
+				else if(tbAtiva == 1) {
+					if(tbHospedes.getSelectedRow() != -1) {
+						ReservaDAO rDAO = new ReservaDAO();
+						HospedeDAO hDAO = new HospedeDAO();
+						String idReserva = tbReservas.getValueAt(tbReservas.getSelectedRow(), 6).toString();
+						rDAO.delete(idReserva);
+						hDAO.delete(idReserva);
+					} else {
+						System.out.println("Selecione uma linha");
+					}
+				}
+				else {
+					System.out.println("Erro. Algo inesperado aconteceu");
+				}
+			}
+			
+		});
+		
 		JLabel labelBtnDelatar = new JLabel("DELETAR");
 		labelBtnDelatar.setHorizontalAlignment(SwingConstants.CENTER);
 		labelBtnDelatar.setForeground(Color.WHITE);

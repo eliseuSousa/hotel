@@ -116,4 +116,30 @@ public class ReservaDAO {
 		
 		return status;
 	}
+	
+	public boolean delete(String idReserva) {
+		
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		boolean status = false;
+		
+		String sql = "DELETE FROM HOTEL.RESERVAS WHERE ID_RESERVA = ?;";
+		
+		try {
+			
+			stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, idReserva);
+			
+			stmt.executeUpdate();	
+			status = true;
+		
+		} catch(SQLException e) {
+			System.out.println("Erro ao deletar  reserva.");
+		} finally {
+			ConnectionFactory.closeConnection(conn, stmt);
+		}
+		
+		return status;
+	}
 }

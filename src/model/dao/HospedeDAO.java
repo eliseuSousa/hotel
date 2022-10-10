@@ -126,4 +126,30 @@ public class HospedeDAO {
 		
 		return status;
 	}
+	
+	public boolean delete(String idReserva) {
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		boolean status = false;
+		
+		String sql = "DELETE FROM HOTEL.HOSPEDES WHERE ID_RESERVA = ?;";
+		
+		try {
+			
+			stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, idReserva);
+			
+			stmt.executeUpdate();
+			
+			status = true;
+			
+		} catch(SQLException e) {
+			System.out.println("Erro ao deletar hóspede: "+e.getMessage());
+		} finally {
+			 ConnectionFactory.closeConnection(conn, stmt);
+		}
+		
+		return status;
+	}
 }
