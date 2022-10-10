@@ -115,7 +115,7 @@ public class EditarHospede extends JFrame {
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Buscar busca = new Buscar();
+				TabelasViews busca = new TabelasViews();
 				busca.setVisible(true);
 				dispose();
 			}
@@ -302,7 +302,7 @@ public class EditarHospede extends JFrame {
 					statusRegistroHospede = hDAO.update(hospedeAtualizado);
 					
 					if(statusRegistroHospede) {
-						Buscar tbBusca = new Buscar();
+						TabelasViews tbBusca = new TabelasViews();
 						tbBusca.setVisible(true);
 						dispose();
 					} else {

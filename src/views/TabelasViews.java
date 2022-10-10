@@ -28,7 +28,7 @@ import model.dao.HospedeDAO;
 import model.dao.ReservaDAO;
 
 @SuppressWarnings("serial")
-public class Buscar extends JFrame {
+public class TabelasViews extends JFrame {
 	
 	private JPanel contentPane;
 	private JTextField barraPesqisa;
@@ -43,14 +43,14 @@ public class Buscar extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				Buscar frame = new Buscar();
+				TabelasViews frame = new TabelasViews();
 				frame.setVisible(true);
 			}
 		});
 	}
 	
-	public Buscar() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Buscar.class.getResource("/img/LOGO_50PX.png")));
+	public TabelasViews() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TabelasViews.class.getResource("/img/LOGO_50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 571);
 		contentPane = new JPanel();
@@ -95,18 +95,9 @@ public class Buscar extends JFrame {
 		tbReservas.getColumnModel().getColumn(0).setCellEditor(null);
 		tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
-		panel.addTab("Reservas", new ImageIcon(Buscar.class.getResource("/img/reservado.png")), barraRolagemTbReservas, null);
+		panel.addTab("Reservas", new ImageIcon(TabelasViews.class.getResource("/img/reservado.png")), barraRolagemTbReservas, null);
 		
-		ReservaDAO rdao = new ReservaDAO();
-		for(Reserva r: rdao.read()) {
-			modeloReservas.addRow(new Object[]{
-					r.getIdReserva(),
-					r.getDataE(),
-					r.getDataS(),
-					r.getValor(),
-					r.getFormaPagamento()
-			});
-		}
+		readTbReserva();
 		
 		tbHospedes = new JTable() {
 			@Override
@@ -125,23 +116,12 @@ public class Buscar extends JFrame {
 		modeloHospedes.addColumn("ID reserva");
 		tbHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbHospedes.setFont(new Font("Roboto", Font.PLAIN, 16));
-		panel.addTab("Hóspedes", new ImageIcon(Buscar.class.getResource("/img/pessoas.png")), barraRolagemTbHospedes, null);
+		panel.addTab("Hóspedes", new ImageIcon(TabelasViews.class.getResource("/img/pessoas.png")), barraRolagemTbHospedes, null);
 		
-		HospedeDAO hDAO = new HospedeDAO();
-		for(Hospede h: hDAO.read()) {
-			modeloHospedes.addRow(new Object[] {
-				h.getIdHospede(),
-				h.getNome(),
-				h.getSobrenome(),
-				h.getDataNascimento(),
-				h.getNacionalidade(),
-				h.getTelefone(),
-				h.getIdReserva()
-			});
-		}
+		readTbHospede();
 		
 		JLabel newLabel = new JLabel("");
-		newLabel.setIcon(new ImageIcon(Buscar.class.getResource("/img/hotel_100px.png")));
+		newLabel.setIcon(new ImageIcon(TabelasViews.class.getResource("/img/hotel_100px.png")));
 		newLabel.setBounds(56, 51, 104, 107);
 		contentPane.add(newLabel);
 		
@@ -273,50 +253,12 @@ public class Buscar extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				int tabelaAtiva = panel.getSelectedIndex();
 				
-				if(tabelaAtiva == 0) {
-					
-					if(tbReservas.getSelectedRow() != -1) {
-						
-						Reserva reserva = new Reserva();
-						
-						reserva.setIdReserva(tbReservas.getValueAt(tbReservas.getSelectedRow(), 0).toString());
-						reserva.setDataE(tbReservas.getValueAt(tbReservas.getSelectedRow(), 1).toString());
-						reserva.setDataS(tbReservas.getValueAt(tbReservas.getSelectedRow(),2).toString());
-						reserva.setValor((float) tbReservas.getValueAt(tbReservas.getSelectedRow(), 3));
-						reserva.setFormaPagamento(tbReservas.getValueAt(tbReservas.getSelectedRow(), 4).toString());
-						
-						EditarReserva updateReserva = new EditarReserva(reserva);
-						updateReserva.setVisible(true);
-						dispose();
-						
-					} else {
-						System.out.println("Selecione uma linha");
-					}
-					
-				} else if(tabelaAtiva == 1) {
-					
-					if(tbHospedes.getSelectedRow() != -1) {
-						
-						Hospede hospede = new Hospede();
-						
-						hospede.setIdHospede(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 0).toString());
-						hospede.setNome(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 1).toString());
-						hospede.setSobrenome(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 2).toString());
-						hospede.setDataNascimento(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 3).toString());
-						hospede.setNacionalidade(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 4).toString());
-						hospede.setTelefone(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 5).toString());
-						hospede.setIdReserva(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 6).toString());						
-						
-						EditarHospede editarHospede = new EditarHospede(hospede);
-						editarHospede.setVisible(true);
-						dispose();
-						
-					} else {
-						System.out.println("Selecione uma linha.");
-					}
-					
-				} else {
-					System.out.print("Algo inesperado aconteceu.");
+				if(tabelaAtiva == 0 && tbReservas.getSelectedRow() != -1) {
+					editarReserva();
+				}
+				
+				if(tabelaAtiva == 1 && tbHospedes.getSelectedRow() != -1) {				
+					editarHospede();	
 				}
 			}
 		});
@@ -341,30 +283,13 @@ public class Buscar extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int tbAtiva = panel.getSelectedIndex();
-				if(tbAtiva == 0) {
-					if(tbReservas.getSelectedRow() != -1) {
-						ReservaDAO rDAO = new ReservaDAO();
-						HospedeDAO hDAO = new HospedeDAO();
-						String idReserva = tbReservas.getValueAt(tbReservas.getSelectedRow(), 0).toString();
-						rDAO.delete(idReserva);
-						hDAO.delete(idReserva);
-					} else {
-						System.out.println("Selecione uma linha");
-					}
+				
+				if(tbAtiva == 0 && tbReservas.getSelectedRow() != -1) {
+					deletarDados();
 				}
-				else if(tbAtiva == 1) {
-					if(tbHospedes.getSelectedRow() != -1) {
-						ReservaDAO rDAO = new ReservaDAO();
-						HospedeDAO hDAO = new HospedeDAO();
-						String idReserva = tbReservas.getValueAt(tbReservas.getSelectedRow(), 6).toString();
-						rDAO.delete(idReserva);
-						hDAO.delete(idReserva);
-					} else {
-						System.out.println("Selecione uma linha");
-					}
-				}
-				else {
-					System.out.println("Erro. Algo inesperado aconteceu");
+				
+				if(tbAtiva == 1 && tbHospedes.getSelectedRow() != -1) {
+					deletarDados();
 				}
 			}
 			
@@ -377,6 +302,76 @@ public class Buscar extends JFrame {
 		labelBtnDelatar.setBounds(0, 0, 122, 35);
 		btnDeletar.add(labelBtnDelatar);
 		setResizable(false);
+	}
+	
+	public void deletarDados() {
+		ReservaDAO rDAO = new ReservaDAO();
+		HospedeDAO hDAO = new HospedeDAO();
+		String idReserva = tbReservas.getValueAt(tbReservas.getSelectedRow(), 0).toString();
+		rDAO.delete(idReserva);
+		hDAO.delete(idReserva);
+		modeloHospedes.setNumRows(0);
+		modeloReservas.setNumRows(0);
+		readTbReserva();
+		readTbHospede();
+	}
+	
+	public void editarReserva() {
+		Reserva reserva = new Reserva();
+		
+		reserva.setIdReserva(tbReservas.getValueAt(tbReservas.getSelectedRow(), 0).toString());
+		reserva.setDataE(tbReservas.getValueAt(tbReservas.getSelectedRow(), 1).toString());
+		reserva.setDataS(tbReservas.getValueAt(tbReservas.getSelectedRow(),2).toString());
+		reserva.setValor((float) tbReservas.getValueAt(tbReservas.getSelectedRow(), 3));
+		reserva.setFormaPagamento(tbReservas.getValueAt(tbReservas.getSelectedRow(), 4).toString());
+		
+		EditarReserva updateReserva = new EditarReserva(reserva);
+		updateReserva.setVisible(true);
+		dispose();
+	}
+	
+	public void editarHospede() {
+		Hospede hospede = new Hospede();
+		
+		hospede.setIdHospede(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 0).toString());
+		hospede.setNome(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 1).toString());
+		hospede.setSobrenome(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 2).toString());
+		hospede.setDataNascimento(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 3).toString());
+		hospede.setNacionalidade(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 4).toString());
+		hospede.setTelefone(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 5).toString());
+		hospede.setIdReserva(tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 6).toString());						
+		
+		EditarHospede editarHospede = new EditarHospede(hospede);
+		editarHospede.setVisible(true);
+		dispose();
+	}
+	
+	public void readTbReserva() {
+		ReservaDAO rdao = new ReservaDAO();
+		for(Reserva r: rdao.read()) {
+			modeloReservas.addRow(new Object[]{
+					r.getIdReserva(),
+					r.getDataE(),
+					r.getDataS(),
+					r.getValor(),
+					r.getFormaPagamento()
+			});
+		}
+	}
+	
+	public void readTbHospede() {
+		HospedeDAO hDAO = new HospedeDAO();
+		for(Hospede h: hDAO.read()) {
+			modeloHospedes.addRow(new Object[] {
+				h.getIdHospede(),
+				h.getNome(),
+				h.getSobrenome(),
+				h.getDataNascimento(),
+				h.getNacionalidade(),
+				h.getTelefone(),
+				h.getIdReserva()
+			});
+		}
 	}
 	
 	private void headerMousePressed(java.awt.event.MouseEvent event) {

@@ -88,7 +88,7 @@ public class MenuUsuario extends JFrame {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Buscar buscar = new Buscar();
+				TabelasViews buscar = new TabelasViews();
 				buscar.setVisible(true);
 				dispose();
 			}

@@ -327,7 +327,7 @@ public class EditarReserva extends JFrame{
 					
 					
 					if(statusReservasUpdate) {
-						Buscar tabelas = new Buscar();
+						TabelasViews tabelas = new TabelasViews();
 						tabelas.setVisible(true);
 					}
 					
