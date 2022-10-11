@@ -168,7 +168,6 @@ public class TabelasViews extends JFrame {
 				labelBtnAtras.setForeground(Color.BLACK);
 			}
 		});
-		
 		btnAtras.setLayout(null);
 		btnAtras.setBackground(Color.WHITE);
 		btnAtras.setBounds(0, 0, 53, 36);
@@ -214,19 +213,20 @@ public class TabelasViews extends JFrame {
 		labelBtnExit.setBounds(0, 0, 53, 36);
 		btnExit.add(labelBtnExit);
 		
-		JSeparator separator = new JSeparator();
-		separator.setForeground(new Color(12, 138, 199));
-		separator.setBackground(new Color(12, 138, 199));
-		separator.setBounds(539, 159, 193, 2);
-		contentPane.add(separator);
+		JSeparator separatorBarraPesquisa = new JSeparator();
+		separatorBarraPesquisa.setForeground(new Color(12, 138, 199));
+		separatorBarraPesquisa.setBackground(new Color(12, 138, 199));
+		separatorBarraPesquisa.setBounds(536, 159, 193, 2);
+		contentPane.add(separatorBarraPesquisa);
 		
-		// Desenvolver lógica necessária
 		JPanel btnBusca = new JPanel();
 		btnBusca.addMouseListener(new MouseAdapter() {
 		
 			@Override 
 			public void mouseClicked(MouseEvent e) {
-				
+				String buscarPor = barraPesqisa.getText();
+				HospedeDAO hdao = new HospedeDAO();
+				hdao.searchIdReserva(buscarPor);
 			}
 		});
 		btnBusca.setLayout(null);
@@ -284,12 +284,12 @@ public class TabelasViews extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				int tbAtiva = panel.getSelectedIndex();
 				
-				if(tbAtiva == 0 && tbReservas.getSelectedRow() != -1) {
-					deletarDados();
+				if(tbAtiva == 0) {
+					if(tbReservas.getSelectedRow() != -1) deletarDados(tbAtiva);
 				}
 				
-				if(tbAtiva == 1 && tbHospedes.getSelectedRow() != -1) {
-					deletarDados();
+				if(tbAtiva == 1) {
+					if(tbHospedes.getSelectedRow() != -1) deletarDados(tbAtiva);
 				}
 			}
 			
@@ -304,10 +304,12 @@ public class TabelasViews extends JFrame {
 		setResizable(false);
 	}
 	
-	public void deletarDados() {
+	public void deletarDados(int tbAtiva) {
 		ReservaDAO rDAO = new ReservaDAO();
 		HospedeDAO hDAO = new HospedeDAO();
-		String idReserva = tbReservas.getValueAt(tbReservas.getSelectedRow(), 0).toString();
+		String idReserva = "";
+		if(tbAtiva == 0) idReserva = tbReservas.getValueAt(tbReservas.getSelectedRow(), 0).toString();
+		if(tbAtiva == 1) idReserva =  tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 6).toString();
 		rDAO.delete(idReserva);
 		hDAO.delete(idReserva);
 		modeloHospedes.setNumRows(0);

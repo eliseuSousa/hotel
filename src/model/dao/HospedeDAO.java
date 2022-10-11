@@ -152,4 +152,76 @@ public class HospedeDAO {
 		
 		return status;
 	}
+	
+	public List<Hospede> searchHospede(String nome) {
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		List<Hospede> hospedes = new ArrayList<>();
+		
+		String sql = "SELECT * FROM HOTEL.HOSPEDES WHERE NOME LIKE ?;";
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, nome);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				Hospede h = new Hospede();
+				h.setIdHospede(rs.getString("ID_HOSPEDE"));
+				h.setIdHospede(rs.getString("NOME"));
+				h.setSobrenome(rs.getString("SOBRENOME"));
+				h.setDataNascimento(rs.getString("DATA_NASCIMENTO"));
+				h.setNacionalidade(rs.getString("NACIONALIDADE"));
+				h.setTelefone(rs.getString("TELEFONE"));
+				h.setIdReserva(rs.getString("ID_RESERVA"));
+				
+				hospedes.add(h);
+			}
+			
+		} catch(SQLException e) {
+			System.out.println("Erro ao pesquisar hóspedes: "+e.getMessage());
+		} finally {
+			ConnectionFactory.closeConnection(conn, stmt);
+		}
+
+		return hospedes;
+	}
+	
+	public String searchIdReserva(String nome) {
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		String idReserva = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT * FROM HOTEL.HOSPEDES WHERE NOME LIKE ?;";
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1,"%"+nome+"%");
+			
+			rs = stmt.executeQuery();
+//			System.out.println(stmt.executeQuery());
+//			if(rs == null) {
+//				System.out.println("nulo");
+//			} else {
+//				System.out.println(rs.getString("NOME"));
+//				System.out.println("nao nulo");
+//			}
+			while(rs.next()) {
+				System.out.println(rs.getString("Nome"));
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao pesquisar id: "+e.getMessage());
+		} finally {
+			ConnectionFactory.closeConnection(conn, stmt);
+		}
+		
+		return idReserva;
+	}
 }

@@ -142,4 +142,42 @@ public class ReservaDAO {
 		
 		return status;
 	}
+	
+	public List<Reserva> searchReserva(String idReserva) {
+		
+		Connection conn = ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		List<Reserva> reservas = new ArrayList<>();
+		
+		String sql = "SELECT * FROM HOTEL.RESERVAS WHERE LIKE ?;";
+		
+		try {
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, idReserva);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				Reserva r = new Reserva();
+				r.setIdReserva(rs.getString("ID_RESERVA"));
+				r.setDataE(rs.getString("DATA_ENTRADA"));
+				r.setDataS(rs.getString("DATA_SAIDA"));
+				r.setValor(rs.getFloat("VALOr"));
+				r.setFormaPagamento(rs.getString("FORMA_PAGEMANTO"));
+				
+				reservas.add(r);
+			}
+			
+		} catch(SQLException e) {
+			System.out.println("Erro ao pesquisar reservas: "+e.getMessage());
+		} finally {
+			ConnectionFactory.closeConnection(conn, stmt);
+		}
+		
+		return reservas;
+	}
 }
