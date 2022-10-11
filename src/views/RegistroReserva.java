@@ -296,7 +296,6 @@ public class RegistroReserva extends JFrame{
 			     labelAtras.setForeground(Color.black);
 			}
 		});
-		
 		btnAtras.setLayout(null);
 		btnAtras.setBackground(Color.WHITE);
 		btnAtras.setBounds(0, 0, 53, 36);
@@ -316,19 +315,7 @@ public class RegistroReserva extends JFrame{
 				
 				if(campoDataEntrada.getDate() != null && campoDataEntrada.getDate() != null) {
 					
-					codigoReserva = geradorCodigo();
-					formaPagamento = (String) boxFormaPagamento.getSelectedItem();
-
-					Reserva reserva = new Reserva();
-					reserva.setIdReserva(codigoReserva);
-					reserva.setDataE(dataEntrada);
-					reserva.setDataS(dataSaida);
-					reserva.setValor(valor);
-					reserva.setFormaPagamento(formaPagamento);
-					
-					RegistroHospede registroHospede = new RegistroHospede(reserva);
-					registroHospede.setVisible(true);
-					dispose();
+					registrandoReserva();
 					
 				} else {
 					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
@@ -361,6 +348,22 @@ public class RegistroReserva extends JFrame{
 		}
 		
 		return codigoGerado;
+	}
+	
+	private void registrandoReserva() {
+		codigoReserva = geradorCodigo();
+		formaPagamento = (String) boxFormaPagamento.getSelectedItem();
+
+		Reserva reserva = new Reserva();
+		reserva.setIdReserva(codigoReserva);
+		reserva.setDataE(dataEntrada);
+		reserva.setDataS(dataSaida);
+		reserva.setValor(valor);
+		reserva.setFormaPagamento(formaPagamento);
+		
+		RegistroHospede registroHospede = new RegistroHospede(reserva);
+		registroHospede.setVisible(true);
+		dispose();
 	}
 	
 	private void headerMousePressed(java.awt.event.MouseEvent event) {

@@ -317,30 +317,7 @@ public class EditarReserva extends JFrame{
 				
 				if(campoDataEntrada.getDate() != null && campoDataEntrada.getDate() != null) {
 					
-					formaPagamento = (String) boxFormaPagamento.getSelectedItem();
-
-					Reserva reservaAtualizado = new Reserva();
-					
-					reservaAtualizado.setIdReserva(registroReserva.getIdReserva());
-					reservaAtualizado.setDataE(dataEntrada);
-					reservaAtualizado.setDataS(dataSaida);
-					reservaAtualizado.setValor(valor);
-					reservaAtualizado.setFormaPagamento(formaPagamento);
-					
-					ReservaDAO rDAO = new ReservaDAO();
-					boolean statusReservasUpdate;
-					
-					statusReservasUpdate = rDAO.update(reservaAtualizado);
-					
-					
-					if(statusReservasUpdate) {
-						TabelasViews tabelas = new TabelasViews();
-						tabelas.setVisible(true);
-					}
-					
-					dispose();
-//					RegistroHospede registroHospede = new RegistroHospede(reserva);
-//					registroHospede.setVisible(true);
+					salvandoAlteracoes(registroReserva);
 					
 				} else {
 					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
@@ -360,6 +337,30 @@ public class EditarReserva extends JFrame{
 		lblBtnSalvar.setFont(new Font("Roboto", Font.PLAIN, 18));
 		lblBtnSalvar.setBounds(0, 0, 122, 35);
 		btnSalvar.add(lblBtnSalvar);
+	}
+	
+	private void salvandoAlteracoes(Reserva registroReserva) {
+		formaPagamento = (String) boxFormaPagamento.getSelectedItem();
+
+		Reserva reservaAtualizado = new Reserva();
+		
+		reservaAtualizado.setIdReserva(registroReserva.getIdReserva());
+		reservaAtualizado.setDataE(dataEntrada);
+		reservaAtualizado.setDataS(dataSaida);
+		reservaAtualizado.setValor(valor);
+		reservaAtualizado.setFormaPagamento(formaPagamento);
+		
+		ReservaDAO rDAO = new ReservaDAO();
+		boolean statusReservasUpdate;
+		
+		statusReservasUpdate = rDAO.update(reservaAtualizado);
+		
+		if(statusReservasUpdate) {
+			TabelasView tabelas = new TabelasView();
+			tabelas.setVisible(true);
+		}
+		
+		dispose();
 	}
 	
 	private void headerMousePressed(java.awt.event.MouseEvent event) {

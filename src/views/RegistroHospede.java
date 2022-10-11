@@ -44,7 +44,7 @@ public class RegistroHospede extends JFrame {
 	private int TAMANHO_CODIGO = 8;
 	private int xMouse, yMouse;
 	
-	public RegistroHospede(Reserva reserva) {
+	public RegistroHospede(Reserva registroReserva) {
 		super("Registro hóspede");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHospede.class.getResource("/img/LOGO_50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -184,7 +184,7 @@ public class RegistroHospede extends JFrame {
 		numeroReserva.setColumns(10);
 		numeroReserva.setBackground(Color.WHITE);
 		numeroReserva.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		numeroReserva.setText(reserva.getIdReserva());
+		numeroReserva.setText(registroReserva.getIdReserva());
 		contentPane.add(numeroReserva);
 		
 		nacionalidade = new JComboBox<>();
@@ -278,38 +278,11 @@ public class RegistroHospede extends JFrame {
 		btnSalvar.addMouseListener(new MouseAdapter() {
 		
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				boolean statusRegistroReserva;
-				boolean statusRegistroHospede;
-				
+			public void mouseClicked(MouseEvent e) {			
 				if(campoNome.getText() != null && campoSobrenome.getText() != null && campoDataNascimento.getDate() != null && campoTelefone.getText() != null) {
 					
-					String dataNascimento = new SimpleDateFormat("yyyy-MM-dd").format(campoDataNascimento.getDate());
-					String idHospede = geradorCodigo();
+					registrandoHospede(registroReserva);
 					
-					Hospede h = new Hospede();
-					HospedeDAO hDAO = new HospedeDAO();
-					ReservaDAO rDAO = new ReservaDAO();
-					
-					h.setIdHospede(idHospede);
-					h.setNome(campoNome.getText());
-					h.setSobrenome(campoSobrenome.getText());
-					h.setDataNascimento(dataNascimento);
-					h.setNacionalidade((String) nacionalidade.getSelectedItem());
-					h.setTelefone(campoTelefone.getText());
-					h.setIdReserva(reserva.getIdReserva());
-					
-					statusRegistroHospede = hDAO.insert(h);
-					statusRegistroReserva = rDAO.insert(reserva);
-					
-					if(statusRegistroHospede && statusRegistroReserva) {
-						Sucesso msgSucesso = new Sucesso();
-						msgSucesso.setVisible(true);
-						dispose();
-					} else {
-						System.out.println("Ops! parece que ocorreu um erro");
-					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
 				}
@@ -356,6 +329,34 @@ public class RegistroHospede extends JFrame {
 		}
 		
 		return codigoGerado;
+	}
+	
+	private void registrandoHospede(Reserva reserva) {
+		String dataNascimento = new SimpleDateFormat("yyyy-MM-dd").format(campoDataNascimento.getDate());
+		String idHospede = geradorCodigo();
+		
+		Hospede h = new Hospede();
+		HospedeDAO hDAO = new HospedeDAO();
+		ReservaDAO rDAO = new ReservaDAO();
+		
+		h.setIdHospede(idHospede);
+		h.setNome(campoNome.getText());
+		h.setSobrenome(campoSobrenome.getText());
+		h.setDataNascimento(dataNascimento);
+		h.setNacionalidade((String) nacionalidade.getSelectedItem());
+		h.setTelefone(campoTelefone.getText());
+		h.setIdReserva(reserva.getIdReserva());
+		
+		boolean statusRegistroHospede = hDAO.insert(h);
+		boolean statusRegistroReserva = rDAO.insert(reserva);
+		
+		if(statusRegistroHospede && statusRegistroReserva) {
+			Sucesso msgSucesso = new Sucesso();
+			msgSucesso.setVisible(true);
+			dispose();
+		} else {
+			System.out.println("Ops! parece que ocorreu um erro");
+		}
 	}
 		
 	private void headerMousePressed(java.awt.event.MouseEvent event) {

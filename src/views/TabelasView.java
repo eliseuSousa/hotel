@@ -29,7 +29,7 @@ import model.dao.HospedeDAO;
 import model.dao.ReservaDAO;
 
 @SuppressWarnings("serial")
-public class TabelasViews extends JFrame {
+public class TabelasView extends JFrame {
 	
 	private JPanel contentPane;
 	private JTextField barraPesqisa;
@@ -44,15 +44,15 @@ public class TabelasViews extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				TabelasViews frame = new TabelasViews();
+				TabelasView frame = new TabelasView();
 				frame.setVisible(true);
 			}
 		});
 	}
 	
-	public TabelasViews() {
+	public TabelasView() {
 		super("Sistema de busca");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(TabelasViews.class.getResource("/img/LOGO_50PX.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TabelasView.class.getResource("/img/LOGO_50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 571);
 		contentPane = new JPanel();
@@ -97,7 +97,7 @@ public class TabelasViews extends JFrame {
 		tbReservas.getColumnModel().getColumn(0).setCellEditor(null);
 		tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
-		panel.addTab("Reservas", new ImageIcon(TabelasViews.class.getResource("/img/reservado.png")), barraRolagemTbReservas, null);
+		panel.addTab("Reservas", new ImageIcon(TabelasView.class.getResource("/img/reservado.png")), barraRolagemTbReservas, null);
 		
 		ReservaDAO rDAO= new ReservaDAO();
 		readTbReserva(rDAO.read());
@@ -119,13 +119,13 @@ public class TabelasViews extends JFrame {
 		modeloHospedes.addColumn("ID reserva");
 		tbHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbHospedes.setFont(new Font("Roboto", Font.PLAIN, 16));
-		panel.addTab("Hóspedes", new ImageIcon(TabelasViews.class.getResource("/img/pessoas.png")), barraRolagemTbHospedes, null);
+		panel.addTab("Hóspedes", new ImageIcon(TabelasView.class.getResource("/img/pessoas.png")), barraRolagemTbHospedes, null);
 		
 		HospedeDAO hDAO = new HospedeDAO();
 		readTbHospede(hDAO.read());
 		
 		JLabel newLabel = new JLabel("");
-		newLabel.setIcon(new ImageIcon(TabelasViews.class.getResource("/img/hotel_100px.png")));
+		newLabel.setIcon(new ImageIcon(TabelasView.class.getResource("/img/hotel_100px.png")));
 		newLabel.setBounds(56, 51, 104, 107);
 		contentPane.add(newLabel);
 		

@@ -115,7 +115,7 @@ public class EditarHospede extends JFrame {
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				TabelasViews busca = new TabelasViews();
+				TabelasView busca = new TabelasView();
 				busca.setVisible(true);
 				dispose();
 			}
@@ -280,32 +280,10 @@ public class EditarHospede extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				boolean statusRegistroHospede;
-				
 				if(campoNome.getText() != null && campoSobrenome.getText() != null && campoDataNascimento.getDate() != null && campoTelefone.getText() != null) {
 					
-					String dataNascimento = new SimpleDateFormat("yyyy-MM-dd").format(campoDataNascimento.getDate());
+					salvandoAlteracoes(registroHospede);
 					
-					Hospede hospedeAtualizado = new Hospede();
-					
-					hospedeAtualizado.setIdHospede(registroHospede.getIdHospede());
-					hospedeAtualizado.setNome(campoNome.getText());
-					hospedeAtualizado.setSobrenome(campoSobrenome.getText());
-					hospedeAtualizado.setDataNascimento(dataNascimento);
-					hospedeAtualizado.setNacionalidade((String) nacionalidade.getSelectedItem());
-					hospedeAtualizado.setTelefone(campoTelefone.getText());
-					hospedeAtualizado.setIdReserva(registroHospede.getIdReserva());
-					
-					HospedeDAO hDAO = new HospedeDAO();
-					statusRegistroHospede = hDAO.update(hospedeAtualizado);
-					
-					if(statusRegistroHospede) {
-						TabelasViews tbBusca = new TabelasViews();
-						tbBusca.setVisible(true);
-						dispose();
-					} else {
-						System.out.println("Ops! parece que ocorreu um erro");
-					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
 				}
@@ -338,6 +316,31 @@ public class EditarHospede extends JFrame {
 		logo.setBounds(194, 39, 104, 107);
 		panelBg.add(logo);
 		logo.setIcon(new ImageIcon(RegistroHospede.class.getResource("/img/hotel_100px.png")));
+	}
+	
+	private void salvandoAlteracoes(Hospede registroHospede) {
+		String dataNascimento = new SimpleDateFormat("yyyy-MM-dd").format(campoDataNascimento.getDate());
+		
+		Hospede hospedeAtualizado = new Hospede();
+		
+		hospedeAtualizado.setIdHospede(registroHospede.getIdHospede());
+		hospedeAtualizado.setNome(campoNome.getText());
+		hospedeAtualizado.setSobrenome(campoSobrenome.getText());
+		hospedeAtualizado.setDataNascimento(dataNascimento);
+		hospedeAtualizado.setNacionalidade((String) nacionalidade.getSelectedItem());
+		hospedeAtualizado.setTelefone(campoTelefone.getText());
+		hospedeAtualizado.setIdReserva(registroHospede.getIdReserva());
+		
+		HospedeDAO hDAO = new HospedeDAO();
+		boolean statusRegistroHospede = hDAO.update(hospedeAtualizado);
+		
+		if(statusRegistroHospede) {
+			TabelasView tbBusca = new TabelasView();
+			tbBusca.setVisible(true);
+			dispose();
+		} else {
+			System.out.println("Ops! parece que ocorreu um erro");
+		}
 	}
 	
 	private void headerMousePressed(java.awt.event.MouseEvent event) {
