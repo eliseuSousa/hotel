@@ -153,7 +153,7 @@ public class HospedeDAO {
 		return status;
 	}
 	
-	public List<Hospede> searchHospede(String nome) {
+	public List<Hospede> searchHospedes(String nome) {
 		Connection conn = ConnectionFactory.getConnection();
 		PreparedStatement stmt = null;
 		
@@ -165,7 +165,7 @@ public class HospedeDAO {
 		try {
 			stmt = conn.prepareStatement(sql);
 			
-			stmt.setString(1, nome);
+			stmt.setString(1, "%"+nome+"%");
 			
 			rs = stmt.executeQuery();
 			
@@ -173,7 +173,7 @@ public class HospedeDAO {
 				
 				Hospede h = new Hospede();
 				h.setIdHospede(rs.getString("ID_HOSPEDE"));
-				h.setIdHospede(rs.getString("NOME"));
+				h.setNome(rs.getString("NOME"));
 				h.setSobrenome(rs.getString("SOBRENOME"));
 				h.setDataNascimento(rs.getString("DATA_NASCIMENTO"));
 				h.setNacionalidade(rs.getString("NACIONALIDADE"));
@@ -190,38 +190,5 @@ public class HospedeDAO {
 		}
 
 		return hospedes;
-	}
-	
-	public String searchIdReserva(String nome) {
-		Connection conn = ConnectionFactory.getConnection();
-		PreparedStatement stmt = null;
-		String idReserva = null;
-		ResultSet rs = null;
-		
-		String sql = "SELECT * FROM HOTEL.HOSPEDES WHERE NOME LIKE ?;";
-		
-		try {
-			stmt = conn.prepareStatement(sql);
-			
-			stmt.setString(1,"%"+nome+"%");
-			
-			rs = stmt.executeQuery();
-//			System.out.println(stmt.executeQuery());
-//			if(rs == null) {
-//				System.out.println("nulo");
-//			} else {
-//				System.out.println(rs.getString("NOME"));
-//				System.out.println("nao nulo");
-//			}
-			while(rs.next()) {
-				System.out.println(rs.getString("Nome"));
-			}
-		} catch (SQLException e) {
-			System.out.println("Erro ao pesquisar id: "+e.getMessage());
-		} finally {
-			ConnectionFactory.closeConnection(conn, stmt);
-		}
-		
-		return idReserva;
 	}
 }

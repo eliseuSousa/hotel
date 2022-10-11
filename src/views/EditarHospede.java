@@ -224,7 +224,7 @@ public class EditarHospede extends JFrame {
 		labelTelefone.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		contentPane.add(labelTelefone);
 		
-		JLabel labelTitulo = new JLabel("REGISTRO HÓSPEDE");
+		JLabel labelTitulo = new JLabel("EDITAR HÓSPEDE");
 		labelTitulo.setBounds(570, 55, 300, 30);
 		labelTitulo.setBackground(new Color(12, 138, 199));
 		labelTitulo.setForeground(new Color(12, 138, 199));
@@ -295,8 +295,6 @@ public class EditarHospede extends JFrame {
 					hospedeAtualizado.setNacionalidade((String) nacionalidade.getSelectedItem());
 					hospedeAtualizado.setTelefone(campoTelefone.getText());
 					hospedeAtualizado.setIdReserva(registroHospede.getIdReserva());
-					
-					System.out.println(hospedeAtualizado.getNacionalidade());
 					
 					HospedeDAO hDAO = new HospedeDAO();
 					statusRegistroHospede = hDAO.update(hospedeAtualizado);

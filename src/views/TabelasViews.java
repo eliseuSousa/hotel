@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -226,7 +227,19 @@ public class TabelasViews extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				String buscarPor = barraPesqisa.getText();
 				HospedeDAO hdao = new HospedeDAO();
-				hdao.searchIdReserva(buscarPor);
+				List<Hospede> hospedesEncontrados = hdao.searchHospedes(buscarPor); 
+				modeloHospedes.setNumRows(0);
+				for(Hospede h: hospedesEncontrados) {
+					modeloHospedes.addRow(new Object[] {
+							h.getIdHospede(),
+							h.getNome(),
+							h.getSobrenome(),
+							h.getDataNascimento(),
+							h.getNacionalidade(),
+							h.getTelefone(),
+							h.getIdReserva()
+						});
+				}
 			}
 		});
 		btnBusca.setLayout(null);
