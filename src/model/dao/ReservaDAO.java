@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import jdbc.ConnectionFactory;
+import model.bean.Hospede;
 import model.bean.Reserva;
 
 public class ReservaDAO {
@@ -143,39 +144,54 @@ public class ReservaDAO {
 		return status;
 	}
 	
-	public List<Reserva> searchReserva(String idReserva) {
+	public List<Reserva> searchReservas(List<Hospede> hospedes) {
 		
 		Connection conn = ConnectionFactory.getConnection();
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
 		
 		List<Reserva> reservas = new ArrayList<>();
 		
-		String sql = "SELECT * FROM HOTEL.RESERVAS WHERE LIKE ?;";
+		String sql = "SELECT * FROM HOTEL.RESERVAS WHERE ID_RESERVA = ?;";
 		
 		try {
 			
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, idReserva);
-			
-			rs = stmt.executeQuery();
-			
-			while(rs.next()) {
+			PreparedStatement stmt = null;
+			for(Hospede h: hospedes) {
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, h.getIdReserva());
+				ResultSet rs = stmt.executeQuery();
 				
-				Reserva r = new Reserva();
-				r.setIdReserva(rs.getString("ID_RESERVA"));
-				r.setDataE(rs.getString("DATA_ENTRADA"));
-				r.setDataS(rs.getString("DATA_SAIDA"));
-				r.setValor(rs.getFloat("VALOr"));
-				r.setFormaPagamento(rs.getString("FORMA_PAGEMANTO"));
+				while(rs.next()) {
+					Reserva reserva = new Reserva();
+					reserva.setIdReserva(rs.getString("ID_RESERVA"));
+					reserva.setDataE(rs.getString("DATA_ENTRADA"));
+					reserva.setDataS(rs.getString("DATA_SAIDA"));
+					reserva.setValor(rs.getFloat("VALOR"));
+					reserva.setFormaPagamento(rs.getString("FORMA_PAGAMENTO"));
+					
+					reservas.add(reserva);
+				}
 				
-				reservas.add(r);
+				stmt.close();
+				rs.close();
 			}
+
+//			
+//			while(rs.next()) {
+//				
+//				Reserva r = new Reserva();
+//				r.setIdReserva(rs.getString("ID_RESERVA"));
+//				r.setDataE(rs.getString("DATA_ENTRADA"));
+//				r.setDataS(rs.getString("DATA_SAIDA"));
+//				r.setValor(rs.getFloat("VALOr"));
+//				r.setFormaPagamento(rs.getString("FORMA_PAGEMANTO"));
+//				
+//				reservas.add(r);
+//			}
 			
 		} catch(SQLException e) {
 			System.out.println("Erro ao pesquisar reservas: "+e.getMessage());
 		} finally {
-			ConnectionFactory.closeConnection(conn, stmt);
+			ConnectionFactory.closeConnection(conn);
 		}
 		
 		return reservas;

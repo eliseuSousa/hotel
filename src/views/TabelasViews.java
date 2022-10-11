@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
+
 import model.bean.Hospede;
 import model.bean.Reserva;
 import model.dao.HospedeDAO;
@@ -239,6 +241,18 @@ public class TabelasViews extends JFrame {
 							h.getTelefone(),
 							h.getIdReserva()
 						});
+				}
+				
+				ReservaDAO rDAO = new ReservaDAO();
+				modeloReservas.setNumRows(0);
+				for(Reserva r: rDAO.searchReservas(hospedesEncontrados)) {
+					modeloReservas.addRow(new Object[]{
+							r.getIdReserva(),
+							r.getDataE(),
+							r.getDataS(),
+							r.getValor(),
+							r.getFormaPagamento()
+					});
 				}
 			}
 		});
