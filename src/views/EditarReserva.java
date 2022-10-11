@@ -76,6 +76,13 @@ public class EditarReserva extends JFrame{
 		setLocationRelativeTo(null);
 		setUndecorated(true);
 		
+		JLabel labelTitulo = new JLabel("EDITAR RESERVA");
+		labelTitulo.setBounds(90, 55, 300, 30);
+		labelTitulo.setBackground(new Color(12, 138, 199));
+		labelTitulo.setForeground(new Color(12, 138, 199));
+		labelTitulo.setFont(new Font("Roboto Black", Font.BOLD, 23));
+		contentPane.add(labelTitulo);
+		
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
 		panel.setBackground(Color.WHITE);

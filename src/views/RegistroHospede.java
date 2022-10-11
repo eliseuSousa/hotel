@@ -45,7 +45,7 @@ public class RegistroHospede extends JFrame {
 	private int xMouse, yMouse;
 	
 	public RegistroHospede(Reserva reserva) {
-		super("Hóspede");
+		super("Registro hóspede");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHospede.class.getResource("/img/LOGO_50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 634);
@@ -344,19 +344,20 @@ public class RegistroHospede extends JFrame {
 		logo.setIcon(new ImageIcon(RegistroHospede.class.getResource("/img/hotel_100px.png")));
 	}
 	
-		private String geradorCodigo() {
+	private String geradorCodigo() {
 			
-			String codigoGerado = "";
-			String[] caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split("");
-			int indice;
+		String codigoGerado = "";
+		String[] caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split("");
+		int indice;
 		
-			for(int i = 0; i < TAMANHO_CODIGO; i++) {
-				indice = (int) Math.round(Math.random()*(caracteres.length - 1));
-				codigoGerado += caracteres[indice];
-			}
-		
-			return codigoGerado;
+		for(int i = 0; i < TAMANHO_CODIGO; i++) {
+			indice = (int) Math.round(Math.random()*(caracteres.length - 1));
+			codigoGerado += caracteres[indice];
 		}
+		
+		return codigoGerado;
+	}
+		
 	private void headerMousePressed(java.awt.event.MouseEvent event) {
 		xMouse = event.getX();
 		yMouse = event.getY();

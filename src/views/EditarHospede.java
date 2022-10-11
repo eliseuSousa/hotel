@@ -194,6 +194,13 @@ public class EditarHospede extends JFrame {
 		nacionalidade.setSelectedItem(registroHospede.getNacionalidade());
 		contentPane.add(nacionalidade);
 		
+		JLabel labelTitulo = new JLabel("EDITAR HÓSPEDE");
+		labelTitulo.setBounds(585, 55, 300, 30);
+		labelTitulo.setBackground(new Color(12, 138, 199));
+		labelTitulo.setForeground(new Color(12, 138, 199));
+		labelTitulo.setFont(new Font("Roboto Black", Font.BOLD, 23));
+		contentPane.add(labelTitulo);
+		
 		JLabel labelNome = new JLabel("NOME");
 		labelNome.setBounds(560, 119, 255, 14);
 		labelNome.setForeground(SystemColor.textHighlight);
@@ -223,13 +230,6 @@ public class EditarHospede extends JFrame {
 		labelTelefone.setForeground(SystemColor.textHighlight);
 		labelTelefone.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		contentPane.add(labelTelefone);
-		
-		JLabel labelTitulo = new JLabel("EDITAR HÓSPEDE");
-		labelTitulo.setBounds(570, 55, 300, 30);
-		labelTitulo.setBackground(new Color(12, 138, 199));
-		labelTitulo.setForeground(new Color(12, 138, 199));
-		labelTitulo.setFont(new Font("Roboto Black", Font.BOLD, 23));
-		contentPane.add(labelTitulo);
 		
 		JLabel labelNumReserva = new JLabel("NÚMERO DE RESERVA");
 		labelNumReserva.setBounds(558, 474, 253, 14);

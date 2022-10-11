@@ -64,7 +64,7 @@ public class RegistroReserva extends JFrame{
 	}
 	
 	public RegistroReserva() {
-		super("Reserva");
+		super("Registro Reserva");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroReserva.class.getResource("/img/hotel_40px.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 560);
@@ -76,6 +76,13 @@ public class RegistroReserva extends JFrame{
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setUndecorated(true);
+		
+		JLabel labelTitulo = new JLabel("REGISTRO RESERVA");
+		labelTitulo.setBounds(75, 55, 300, 30);
+		labelTitulo.setBackground(new Color(12, 138, 199));
+		labelTitulo.setForeground(new Color(12, 138, 199));
+		labelTitulo.setFont(new Font("Roboto Black", Font.BOLD, 23));
+		contentPane.add(labelTitulo);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
@@ -328,7 +335,6 @@ public class RegistroReserva extends JFrame{
 				}
 		 	}
 		});
-		
 		btnNext.setLayout(null);
 		btnNext.setBackground(new Color(12, 138, 199));
 		btnNext.setBounds(238, 473, 122, 35);
