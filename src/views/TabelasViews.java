@@ -23,8 +23,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
-
 import model.bean.Hospede;
 import model.bean.Reserva;
 import model.dao.HospedeDAO;
@@ -53,6 +51,7 @@ public class TabelasViews extends JFrame {
 	}
 	
 	public TabelasViews() {
+		super("Sistema de busca");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TabelasViews.class.getResource("/img/LOGO_50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 571);
@@ -100,7 +99,8 @@ public class TabelasViews extends JFrame {
 		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel.addTab("Reservas", new ImageIcon(TabelasViews.class.getResource("/img/reservado.png")), barraRolagemTbReservas, null);
 		
-		readTbReserva();
+		ReservaDAO rDAO= new ReservaDAO();
+		readTbReserva(rDAO.read());
 		
 		tbHospedes = new JTable() {
 			@Override
@@ -121,7 +121,8 @@ public class TabelasViews extends JFrame {
 		tbHospedes.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel.addTab("Hóspedes", new ImageIcon(TabelasViews.class.getResource("/img/pessoas.png")), barraRolagemTbHospedes, null);
 		
-		readTbHospede();
+		HospedeDAO hDAO = new HospedeDAO();
+		readTbHospede(hDAO.read());
 		
 		JLabel newLabel = new JLabel("");
 		newLabel.setIcon(new ImageIcon(TabelasViews.class.getResource("/img/hotel_100px.png")));
@@ -244,16 +245,7 @@ public class TabelasViews extends JFrame {
 				}
 				
 				ReservaDAO rDAO = new ReservaDAO();
-				modeloReservas.setNumRows(0);
-				for(Reserva r: rDAO.searchReservas(hospedesEncontrados)) {
-					modeloReservas.addRow(new Object[]{
-							r.getIdReserva(),
-							r.getDataE(),
-							r.getDataS(),
-							r.getValor(),
-							r.getFormaPagamento()
-					});
-				}
+				readTbReserva(rDAO.searchReservas(hospedesEncontrados));
 			}
 		});
 		btnBusca.setLayout(null);
@@ -339,10 +331,8 @@ public class TabelasViews extends JFrame {
 		if(tbAtiva == 1) idReserva =  tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 6).toString();
 		rDAO.delete(idReserva);
 		hDAO.delete(idReserva);
-		modeloHospedes.setNumRows(0);
-		modeloReservas.setNumRows(0);
-		readTbReserva();
-		readTbHospede();
+		readTbReserva(rDAO.read());
+		readTbHospede(hDAO.read());
 	}
 	
 	public void editarReserva() {
@@ -375,9 +365,9 @@ public class TabelasViews extends JFrame {
 		dispose();
 	}
 	
-	public void readTbReserva() {
-		ReservaDAO rdao = new ReservaDAO();
-		for(Reserva r: rdao.read()) {
+	public void readTbReserva(List<Reserva> reservas) {
+		modeloReservas.setNumRows(0);
+		for(Reserva r: reservas) {
 			modeloReservas.addRow(new Object[]{
 					r.getIdReserva(),
 					r.getDataE(),
@@ -388,9 +378,9 @@ public class TabelasViews extends JFrame {
 		}
 	}
 	
-	public void readTbHospede() {
-		HospedeDAO hDAO = new HospedeDAO();
-		for(Hospede h: hDAO.read()) {
+	public void readTbHospede(List<Hospede> hospedes) {
+		modeloHospedes.setNumRows(0);
+		for(Hospede h: hospedes) {
 			modeloHospedes.addRow(new Object[] {
 				h.getIdHospede(),
 				h.getNome(),
