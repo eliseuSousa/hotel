@@ -94,7 +94,6 @@ public class TabelasView extends JFrame {
 		modeloReservas.addColumn("Data Check Out");
 		modeloReservas.addColumn("Valor");
 		modeloReservas.addColumn("Forma de Pagamento");
-		tbReservas.getColumnModel().getColumn(0).setCellEditor(null);
 		tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel.addTab("Reservas", new ImageIcon(TabelasView.class.getResource("/img/reservado.png")), barraRolagemTbReservas, null);
@@ -231,18 +230,7 @@ public class TabelasView extends JFrame {
 				String buscarPor = barraPesqisa.getText();
 				HospedeDAO hdao = new HospedeDAO();
 				List<Hospede> hospedesEncontrados = hdao.searchHospedes(buscarPor); 
-				modeloHospedes.setNumRows(0);
-				for(Hospede h: hospedesEncontrados) {
-					modeloHospedes.addRow(new Object[] {
-							h.getIdHospede(),
-							h.getNome(),
-							h.getSobrenome(),
-							h.getDataNascimento(),
-							h.getNacionalidade(),
-							h.getTelefone(),
-							h.getIdReserva()
-						});
-				}
+				readTbHospede(hospedesEncontrados);
 				
 				ReservaDAO rDAO = new ReservaDAO();
 				readTbReserva(rDAO.searchReservas(hospedesEncontrados));

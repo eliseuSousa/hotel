@@ -318,7 +318,7 @@ public class RegistroReserva extends JFrame{
 					registrandoReserva();
 					
 				} else {
-					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
+					JOptionPane.showMessageDialog(null, "Preencher todos os campos.");
 				}
 		 	}
 		});

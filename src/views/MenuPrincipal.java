@@ -95,7 +95,6 @@ public class MenuPrincipal extends JFrame {
 		header.setBackground(Color.WHITE);
 		panel.add(header);
 		
-		// Botão sair
 		JPanel btnExit = new JPanel();
 		btnExit.addMouseListener(new MouseAdapter() {
 		
@@ -129,8 +128,6 @@ public class MenuPrincipal extends JFrame {
 		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
 		
-		
-		//Botão Login
 		JPanel btnLogin = new JPanel();
 		btnLogin.setBounds(754, 300, 83, 70);
 		btnLogin.addMouseListener(new MouseAdapter() {
@@ -161,9 +158,6 @@ public class MenuPrincipal extends JFrame {
 		lblTitulo.setForeground(SystemColor.textHighlight);
 		lblTitulo.setFont(new Font("Roboto Light", Font.PLAIN, 20));
 	}
-	
-	// Código que permite movimentar a janela pela tela de acordo com 
-	// a posição de "x" e "y"
 	
 	private void headerMousePressed(java.awt.event.MouseEvent event) {
 		this.xMouse = event.getXOnScreen();

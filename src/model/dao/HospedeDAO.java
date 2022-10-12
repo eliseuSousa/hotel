@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import jdbc.ConnectionFactory;
 import model.bean.Hospede;
 import views.Sucesso;
@@ -46,7 +48,7 @@ public class HospedeDAO {
 			Sucesso newView = new Sucesso();
 			newView.setVisible(true);
 		} catch (SQLException e) {
-			System.out.println("erro ao inserir um novo hóspede: "+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao inserir novo hóspede.");
 		} finally {
 			ConnectionFactory.closeConnection(conn, stmt);
 		}
@@ -82,7 +84,7 @@ public class HospedeDAO {
 				
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao buscar dados dos hóspedes.");
+			JOptionPane.showMessageDialog(null, "Erro ao buscar dados dos hóspedes.");
 		} finally {
 			ConnectionFactory.closeConnection(conn, stmt);
 		}
@@ -119,7 +121,7 @@ public class HospedeDAO {
 			status = true;
 			
 		} catch (SQLException e) {
-			System.out.println("Erro ao atualizar hóspede: "+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao atualizar os dados dos hóspedes.");
 		} finally {
 			ConnectionFactory.closeConnection(conn, stmt);
 		}
@@ -145,7 +147,7 @@ public class HospedeDAO {
 			status = true;
 			
 		} catch(SQLException e) {
-			System.out.println("Erro ao deletar hóspede: "+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao deletar hóspede.");
 		} finally {
 			 ConnectionFactory.closeConnection(conn, stmt);
 		}
@@ -184,7 +186,7 @@ public class HospedeDAO {
 			}
 			
 		} catch(SQLException e) {
-			System.out.println("Erro ao pesquisar hóspedes: "+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao pesquisar hóspedes.");
 		} finally {
 			ConnectionFactory.closeConnection(conn, stmt);
 		}

@@ -320,11 +320,10 @@ public class EditarReserva extends JFrame{
 					salvandoAlteracoes(registroReserva);
 					
 				} else {
-					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
+					JOptionPane.showMessageDialog(null, "Preencher todos os campos.");
 				}
 		 	}
-		});
-		
+		});	
 		btnSalvar.setLayout(null);
 		btnSalvar.setBackground(new Color(12, 138, 199));
 		btnSalvar.setBounds(238, 473, 122, 35);
@@ -358,6 +357,8 @@ public class EditarReserva extends JFrame{
 		if(statusReservasUpdate) {
 			TabelasView tabelas = new TabelasView();
 			tabelas.setVisible(true);
+		} else {
+			JOptionPane.showMessageDialog(null, "Erro ao tentar salvar as alterações.");
 		}
 		
 		dispose();

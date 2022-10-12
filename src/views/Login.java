@@ -159,7 +159,6 @@ public class Login extends JFrame{
 				}
 			}
 		});
-		
 		txtSenha.setForeground(SystemColor.activeCaptionBorder);
 		txtSenha.setFont(new Font("Roboto", Font.PLAIN, 16));
 		txtSenha.setBorder(javax.swing.BorderFactory.createEmptyBorder());

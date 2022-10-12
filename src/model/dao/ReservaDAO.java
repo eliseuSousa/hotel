@@ -43,7 +43,7 @@ public class ReservaDAO {
 			status = true;
 			
 		} catch(SQLException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao salvar: "+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao inserir dados.");
 		} finally {
 			ConnectionFactory.closeConnection(conn, stmt);
 		}
@@ -76,7 +76,7 @@ public class ReservaDAO {
 				reservas.add(r);
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao conectar com o bannco de dados:"+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao buscar dados das reservas.");
 		} finally {
 			ConnectionFactory.closeConnection(conn, stmt);
 		}
@@ -110,7 +110,7 @@ public class ReservaDAO {
 			status = true;
 			
 		} catch(SQLException e) {
-			System.out.println("Problema ao executar o sql: "+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao atualizar dados da reserva.");
 		} finally {
 			ConnectionFactory.closeConnection(conn, stmt);
 		}
@@ -136,7 +136,7 @@ public class ReservaDAO {
 			status = true;
 		
 		} catch(SQLException e) {
-			System.out.println("Erro ao deletar  reserva.");
+			JOptionPane.showMessageDialog(null, "Erro ao deletar reserva.");
 		} finally {
 			ConnectionFactory.closeConnection(conn, stmt);
 		}
@@ -174,22 +174,9 @@ public class ReservaDAO {
 				stmt.close();
 				rs.close();
 			}
-
-//			
-//			while(rs.next()) {
-//				
-//				Reserva r = new Reserva();
-//				r.setIdReserva(rs.getString("ID_RESERVA"));
-//				r.setDataE(rs.getString("DATA_ENTRADA"));
-//				r.setDataS(rs.getString("DATA_SAIDA"));
-//				r.setValor(rs.getFloat("VALOr"));
-//				r.setFormaPagamento(rs.getString("FORMA_PAGEMANTO"));
-//				
-//				reservas.add(r);
-//			}
 			
 		} catch(SQLException e) {
-			System.out.println("Erro ao pesquisar reservas: "+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao pesquisar reservas.");
 		} finally {
 			ConnectionFactory.closeConnection(conn);
 		}

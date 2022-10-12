@@ -284,7 +284,7 @@ public class RegistroHospede extends JFrame {
 					registrandoHospede(registroReserva);
 					
 				} else {
-					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
+					JOptionPane.showMessageDialog(null, "Preencher todos os campos.");
 				}
 			}
 		});
@@ -355,7 +355,7 @@ public class RegistroHospede extends JFrame {
 			msgSucesso.setVisible(true);
 			dispose();
 		} else {
-			System.out.println("Ops! parece que ocorreu um erro");
+			JOptionPane.showMessageDialog(null, "Erro ao tentar salvar as alterações.");
 		}
 	}
 		

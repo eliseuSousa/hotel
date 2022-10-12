@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 public class ConnectionFactory {
 	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost/HOTEL";
@@ -17,9 +19,9 @@ public class ConnectionFactory {
 			Class.forName(DRIVER);
 			myConn = DriverManager.getConnection(URL, USER, PASS);
 		} catch (ClassNotFoundException e) {
-			System.out.println("Driver não encontrado");
+			JOptionPane.showMessageDialog(null, "Driver não encontrado.");
 		} catch (SQLException e) {
-			System.out.println("Erro ao conectas com o banco de dados");
+			JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco de dados.");
 		}
 		
 		return myConn;
@@ -31,7 +33,7 @@ public class ConnectionFactory {
 				conn.close();
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao fechar a conexão: "+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao fechar conexão com o banco de dados");
 		}
 	}
 	
@@ -42,7 +44,7 @@ public class ConnectionFactory {
 				stmt.close();
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao fechar a conexão: "+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão com o banco de dados.");
 		}
 	}
 }

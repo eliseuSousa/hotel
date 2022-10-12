@@ -93,7 +93,6 @@ public class MenuUsuario extends JFrame {
 				dispose();
 			}
 		});
-		
 		btnBuscar.setBounds(0, 312, 257, 56);
 		btnBuscar.setBackground(new Color(12, 138, 199));
 		btnBuscar.setLayout(null);
@@ -206,11 +205,11 @@ public class MenuUsuario extends JFrame {
 		labelFecha.setForeground(Color.white);
 		labelFecha.setFont(new Font("Roboto", Font.PLAIN, 30));
 		// Data atual
-		Date fechaAtual = new Date();
+		Date dataAtual = new Date();
 		// Formata a data em uma string
-		String fecha = new SimpleDateFormat("dd/MM/yyyy").format(fechaAtual);
+		String dataFormatada = new SimpleDateFormat("dd/MM/yyyy").format(dataAtual);
 		// Estabelece a data na label
-		labelFecha.setText("Hoje é "+fecha);
+		labelFecha.setText("Hoje é "+dataFormatada);
 		
 		JLabel lblTitulo = new JLabel("Bem-vindo");
 		lblTitulo.setFont(new Font("Roboto", Font.BOLD, 24));
