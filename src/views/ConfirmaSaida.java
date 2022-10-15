@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
@@ -19,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 public class ConfirmaSaida extends JDialog {
 	
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPane = new JPanel();
 	
 	public static void main(String[] args) {
@@ -61,6 +61,16 @@ public class ConfirmaSaida extends JDialog {
 			public void mouseClicked(MouseEvent e) {
 				System.exit(0);
 			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnExit.setBackground(new Color(124, 198, 254));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnExit.setBackground(new Color(12, 138, 199));
+			}
 		});
 		btnExit.setLayout(null);
 		btnExit.setBounds(110, 155, 73, 25);
@@ -81,6 +91,16 @@ public class ConfirmaSaida extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				dispose();
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnCancelar.setBackground(new Color(124, 198, 254));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnCancelar.setBackground(new Color(12, 138, 199));
 			}
 		});
 		btnCancelar.setLayout(null);

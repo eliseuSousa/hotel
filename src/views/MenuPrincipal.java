@@ -7,7 +7,6 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.ImageIcon;
@@ -18,7 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class MenuPrincipal extends JFrame {
-	
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPanel;
 	private JLabel labelExit;
 	int xMouse, yMouse;
@@ -36,6 +35,7 @@ public class MenuPrincipal extends JFrame {
 	}
 	
 	public MenuPrincipal() {
+		super("Menu Principal");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/img/hotel_40px.png")));
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 910, 537);

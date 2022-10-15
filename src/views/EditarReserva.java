@@ -63,7 +63,7 @@ public class EditarReserva extends JFrame{
 	}
 	
 	public EditarReserva(Reserva registroReserva) {
-		super("Editar");
+		super("Editar Reserva");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroReserva.class.getResource("/img/hotel_40px.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 560);
@@ -124,6 +124,7 @@ public class EditarReserva extends JFrame{
 		campoDataEntrada.setBorder(new LineBorder(SystemColor.window));
 		campoDataEntrada.setFont(new Font("Roboto", Font.PLAIN, 18));
 		campoDataEntrada.setDateFormatString("dd/MM/yyyy");
+		campoDataEntrada.getCalendarButton().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		panel.add(campoDataEntrada);
 		
 		JLabel labelCheckIn = new JLabel("DATA DE CHECK IN");
@@ -140,6 +141,7 @@ public class EditarReserva extends JFrame{
 		campoDataSaida.setBackground(new Color(12, 138, 199));
 		campoDataSaida.getCalendarButton().setBackground(new Color(12, 138, 199));
 		campoDataSaida.setFont(new Font("Roboto", Font.PLAIN, 18));
+		campoDataSaida.getCalendarButton().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		
 		JLabel labelCheckOut = new JLabel("DATA DE CHECK OUT");
 		labelCheckOut.setBackground(SystemColor.textHighlight);
@@ -323,6 +325,16 @@ public class EditarReserva extends JFrame{
 					JOptionPane.showMessageDialog(null, "Preencher todos os campos.");
 				}
 		 	}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnSalvar.setBackground(new Color(124, 198,  254));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnSalvar.setBackground(new Color(12, 138, 199));
+			}
 		});	
 		btnSalvar.setLayout(null);
 		btnSalvar.setBackground(new Color(12, 138, 199));

@@ -125,6 +125,7 @@ public class RegistroReserva extends JFrame{
 		campoDataEntrada.setBorder(new LineBorder(SystemColor.window));
 		campoDataEntrada.setDateFormatString("dd/MM/yyyy");
 		campoDataEntrada.setFont(new Font("Roboto", Font.PLAIN, 18));
+		campoDataEntrada.getCalendarButton().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		panel.add(campoDataEntrada);
 		
 		labelValorSimbolo = new JLabel("R$");
@@ -155,7 +156,7 @@ public class RegistroReserva extends JFrame{
 		campoDataSaida.setBackground(new Color(12, 138, 199));
 		campoDataSaida.getCalendarButton().setBackground(new Color(12, 138, 199));
 		campoDataSaida.setFont(new Font("Roboto", Font.PLAIN, 18));
-		
+		campoDataSaida.getCalendarButton().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		campoDataSaida.addPropertyChangeListener(new PropertyChangeListener() {
 			
 			@Override
@@ -321,6 +322,16 @@ public class RegistroReserva extends JFrame{
 					JOptionPane.showMessageDialog(null, "Preencher todos os campos.");
 				}
 		 	}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnNext.setBackground(new Color(124, 198,  254));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnNext.setBackground(new Color(12, 138, 199));
+			}
 		});
 		btnNext.setLayout(null);
 		btnNext.setBackground(new Color(12, 138, 199));

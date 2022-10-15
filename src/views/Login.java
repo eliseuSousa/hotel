@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -42,7 +43,9 @@ public class Login extends JFrame{
 	}
 	
 	public Login() {
-		setResizable(false);
+		super("Login");
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/hotel_40px.png")));		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 788, 527);
@@ -182,12 +185,12 @@ public class Login extends JFrame{
 		
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnLogin.setBackground(new Color(0, 156, 223));
+				btnLogin.setBackground(new Color(124, 198,  254));
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnLogin.setBackground(SystemColor.textHighlight);
+				btnLogin.setBackground(new Color(0, 156, 223));
 			}
 			
 			@Override
@@ -195,7 +198,7 @@ public class Login extends JFrame{
 				autenticarLogin();
 			}
 		});
-		btnLogin.setBackground(SystemColor.textHighlight);
+		btnLogin.setBackground(new Color(0, 156, 223));
 		btnLogin.setBounds(65, 431, 122, 44);
 		panel.add(btnLogin);
 		btnLogin.setLayout(null);
@@ -204,7 +207,7 @@ public class Login extends JFrame{
 		JLabel labelEntrar = new JLabel("Entrar");
 		labelEntrar.setBounds(0, 0, 122, 44);
 		btnLogin.add(labelEntrar);
-		labelEntrar.setForeground(SystemColor.controlHighlight);
+		labelEntrar.setForeground(SystemColor.WHITE);
 		labelEntrar.setHorizontalAlignment(SwingConstants.CENTER);
 		labelEntrar.setFont(new Font("Roboto", Font.PLAIN, 18));
 		

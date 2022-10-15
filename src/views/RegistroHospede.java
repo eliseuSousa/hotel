@@ -168,6 +168,7 @@ public class RegistroHospede extends JFrame {
 		campoDataNascimento.getCalendarButton().setIcon(new ImageIcon(RegistroHospede.class.getResource("/img/icon-reservas.png")));
 		campoDataNascimento.getCalendarButton().setBackground(new Color(12, 138, 199));
 		campoDataNascimento.setDateFormatString("yyyy-MM-dd");
+		campoDataNascimento.getCalendarButton().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		contentPane.add(campoDataNascimento);
 		
 		campoTelefone = new JTextField();
@@ -286,6 +287,16 @@ public class RegistroHospede extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(null, "Preencher todos os campos.");
 				}
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnSalvar.setBackground(new Color(124, 198,  254));
+			}
+			
+			@Override 
+			public void mouseExited(MouseEvent e) {
+				btnSalvar.setBackground(new Color(12, 138, 199));
 			}
 		});
 		btnSalvar.setLayout(null);

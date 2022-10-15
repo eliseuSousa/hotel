@@ -7,7 +7,6 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,7 +20,6 @@ import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class MenuUsuario extends JFrame {
-	
 	private JPanel contentPane;
 	int xMouse, yMouse;
 	private JLabel lblExit;
@@ -39,6 +37,7 @@ public class MenuUsuario extends JFrame {
 	}
 	
 	public MenuUsuario() {
+		super("Menu usuário");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuUsuario.class.getResource("/img/hotel_40px.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 944, 609);

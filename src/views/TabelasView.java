@@ -235,6 +235,16 @@ public class TabelasView extends JFrame {
 				ReservaDAO rDAO = new ReservaDAO();
 				readTbReserva(rDAO.searchReservas(hospedesEncontrados));
 			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnBusca.setBackground(new Color(124, 198,  254));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnBusca.setBackground(new Color(12, 138, 199));
+			}
 		});
 		btnBusca.setLayout(null);
 		btnBusca.setBackground(new Color(12, 138, 199));
@@ -268,6 +278,16 @@ public class TabelasView extends JFrame {
 					editarHospede();	
 				}
 			}
+			
+			@Override 
+			public void mouseEntered(MouseEvent e) {
+				btnEditar.setBackground(new Color(124, 198,  254));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnEditar.setBackground(new Color(12, 138, 199));
+			}
 		});
 		contentPane.add(btnEditar);
 		
@@ -298,6 +318,16 @@ public class TabelasView extends JFrame {
 				if(tbAtiva == 1) {
 					if(tbHospedes.getSelectedRow() != -1) deletarDados(tbAtiva);
 				}
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnDeletar.setBackground(new Color(124, 198,  254));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnDeletar.setBackground(new Color(12, 138, 199));
 			}
 			
 		});
