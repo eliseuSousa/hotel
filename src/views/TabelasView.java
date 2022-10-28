@@ -388,8 +388,8 @@ public class TabelasView extends JFrame {
 		for(Reserva r: reservas) {
 			modeloReservas.addRow(new Object[]{
 					r.getIdReserva(),
-					r.getDataE(),
-					r.getDataS(),
+					formataData(r.getDataE()),
+					formataData(r.getDataS()),
 					r.getValor(),
 					r.getFormaPagamento()
 			});
@@ -403,12 +403,24 @@ public class TabelasView extends JFrame {
 				h.getIdHospede(),
 				h.getNome(),
 				h.getSobrenome(),
-				h.getDataNascimento(),
+				formataData(h.getDataNascimento()),
 				h.getNacionalidade(),
 				h.getTelefone(),
 				h.getIdReserva()
 			});
 		}
+	}
+	
+	private String formataData(String data) {
+		String[] dataAntiga = data.split("-");
+		
+		String dia = dataAntiga[2];
+		String mes = dataAntiga[1];
+		String ano = dataAntiga[0];
+		
+		String novaData = dia+"/"+mes+"/"+ano;
+		
+		return novaData;
 	}
 	
 	private void headerMousePressed(java.awt.event.MouseEvent event) {
