@@ -284,8 +284,8 @@ public class EditarReserva extends JFrame{
 		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				MenuUsuario usuario = new MenuUsuario();
-				usuario.setVisible(true);
+				TabelasView tbView = new TabelasView();
+				tbView.setVisible(true);
 				dispose();				
 			}
 			@Override
