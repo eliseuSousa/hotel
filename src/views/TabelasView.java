@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -277,6 +278,10 @@ public class TabelasView extends JFrame {
 				if(tabelaAtiva == 1 && tbHospedes.getSelectedRow() != -1) {				
 					editarHospede();	
 				}
+				
+				if((tabelaAtiva == 0 && tbReservas.getSelectedRow() == -1) || (tabelaAtiva == 1 && tbHospedes.getSelectedRow() == -1)) {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha.");
+				}
 			}
 			
 			@Override 
@@ -311,12 +316,16 @@ public class TabelasView extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				int tbAtiva = panel.getSelectedIndex();
 				
-				if(tbAtiva == 0) {
-					if(tbReservas.getSelectedRow() != -1) deletarDados(tbAtiva);
+				if(tbAtiva == 0 && tbReservas.getSelectedRow() != -1) {
+					deletarDados(tbAtiva);
 				}
 				
-				if(tbAtiva == 1) {
-					if(tbHospedes.getSelectedRow() != -1) deletarDados(tbAtiva);
+				if(tbAtiva == 1 && tbHospedes.getSelectedRow() != -1) {
+					deletarDados(tbAtiva);
+				}
+				 
+				if((tbAtiva == 0 && tbReservas.getSelectedRow() == -1) || (tbAtiva == 1 && tbHospedes.getSelectedRow() == -1)) {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha.");
 				}
 			}
 			
