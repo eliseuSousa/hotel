@@ -280,7 +280,7 @@ public class RegistroHospede extends JFrame {
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {			
-				if(campoNome.getText() != null && campoSobrenome.getText() != null && campoDataNascimento.getDate() != null && campoTelefone.getText() != null) {
+				if(!campoNome.getText().equals("") && !campoSobrenome.getText().equals("") && campoDataNascimento.getDate() != null && !campoTelefone.getText().equals("")) {
 					
 					registrandoHospede(registroReserva);
 					
