@@ -271,16 +271,20 @@ public class TabelasView extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				int tabelaAtiva = panel.getSelectedIndex();
 				
-				if(tabelaAtiva == 0 && tbReservas.getSelectedRow() != -1) {
-					editarReserva();
+				if(tabelaAtiva == 0) {
+					if(tbReservas.getSelectedRow() != -1) {
+						editarReserva();
+					} else {
+						JOptionPane.showMessageDialog(null, "Selecione uma linha.");
+					}
 				}
 				
-				if(tabelaAtiva == 1 && tbHospedes.getSelectedRow() != -1) {				
-					editarHospede();	
-				}
-				
-				if((tabelaAtiva == 0 && tbReservas.getSelectedRow() == -1) || (tabelaAtiva == 1 && tbHospedes.getSelectedRow() == -1)) {
-					JOptionPane.showMessageDialog(null, "Selecione uma linha.");
+				if(tabelaAtiva == 1) {				
+					if(tbHospedes.getSelectedRow() != -1) {
+						editarHospede();
+					} else {
+						JOptionPane.showMessageDialog(null, "Selecione uma linha.");
+					}
 				}
 			}
 			
@@ -316,16 +320,21 @@ public class TabelasView extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				int tbAtiva = panel.getSelectedIndex();
 				
-				if(tbAtiva == 0 && tbReservas.getSelectedRow() != -1) {
-					deletarDados(tbAtiva);
+				if(tbAtiva == 0) {
+					if(tbReservas.getSelectedRow() != -1) {
+						deletarDados(tbAtiva);
+					} else {
+						JOptionPane.showMessageDialog(null, "Selecione uma linha.");
+					}
+					
 				}
 				
 				if(tbAtiva == 1 && tbHospedes.getSelectedRow() != -1) {
-					deletarDados(tbAtiva);
-				}
-				 
-				if((tbAtiva == 0 && tbReservas.getSelectedRow() == -1) || (tbAtiva == 1 && tbHospedes.getSelectedRow() == -1)) {
-					JOptionPane.showMessageDialog(null, "Selecione uma linha.");
+					if(tbHospedes.getSelectedRow() != -1) {
+						deletarDados(tbAtiva);
+					} else {
+						JOptionPane.showMessageDialog(null, "Selecione uma linha.");
+					}
 				}
 			}
 			
