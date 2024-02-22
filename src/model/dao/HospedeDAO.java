@@ -20,15 +20,15 @@ public class HospedeDAO {
 		PreparedStatement stmt = null;
 		boolean status = false;
 		
-		String sql = "INSERT INTO HOTEL.HOSPEDES("
-				+ "ID_HOSPEDE,"
-				+ "NOME,"
-				+ "SOBRENOME,"
-				+ "DATA_NASCIMENTO,"
-				+ "NACIONALIDADE,"
-				+ "TELEFONE,"
-				+ "ID_RESERVA)"
-				+ "VALUES(?, ?, ?, ?, ?, ?, ?);";
+		String sql = "insert into hotel.hospedes("
+			+ "id_hospede,"
+			+ "nome,"
+			+ "sobrenome,"
+			+ "data_nascimento,"
+			+ "nacionalidade,"
+			+ "telefone,"
+			+ "id_reserva)"
+			+ "values(?, ?, ?, ?, ?, ?, ?);";
 		
 		try {
 			stmt = conn.prepareStatement(sql);
@@ -62,7 +62,7 @@ public class HospedeDAO {
 		ResultSet rs = null;
 		
 		List<Hospede> hospedes = new ArrayList<>();
-		String sql = "SELECT * FROM HOTEL.HOSPEDES;";
+		String sql = "select * from hotel.hospedes;";
 		
 		try {
 			stmt = conn.prepareStatement(sql);
@@ -72,13 +72,13 @@ public class HospedeDAO {
 				
 				Hospede h = new Hospede();
 				
-				h.setIdHospede(rs.getString("ID_HOSPEDE"));
-				h.setNome(rs.getString("NOME"));
-				h.setSobrenome(rs.getString("SOBRENOME"));
-				h.setDataNascimento(rs.getString("DATA_NASCIMENTO"));
-				h.setNacionalidade(rs.getString("NACIONALIDADE"));
-				h.setTelefone(rs.getString("TELEFONE"));
-				h.setIdReserva(rs.getString("ID_RESERVA"));
+				h.setIdHospede(rs.getString("id_reserva"));
+				h.setNome(rs.getString("nome"));
+				h.setSobrenome(rs.getString("sobrenome"));
+				h.setDataNascimento(rs.getString("data_nascimento"));
+				h.setNacionalidade(rs.getString("nacionalidade"));
+				h.setTelefone(rs.getString("telefone"));
+				h.setIdReserva(rs.getString("id_reserva"));
 				
 				hospedes.add(h);
 				
@@ -97,13 +97,13 @@ public class HospedeDAO {
 		PreparedStatement stmt = null;
 		boolean status = false;
 		
-		String sql = "UPDATE HOTEL.HOSPEDES SET "
-				+ "NOME = ?,"
-				+ "SOBRENOME = ?,"
-				+ "DATA_NASCIMENTO = ?,"
-				+ "NACIONALIDADE = ?,"
-				+ "TELEFONE = ? "
-				+ "WHERE ID_HOSPEDE = ?;";
+		String sql = "update hotel.hospedes set "
+			+ "nome = ?,"
+			+ "sobrenome = ?,"
+			+ "data_nascimento = ?,"
+			+ "nacionalidade = ?,"
+			+ "telefone = ? "
+			+ "where id_hospede = ?;";
 		
 		try {
 			
@@ -134,7 +134,7 @@ public class HospedeDAO {
 		PreparedStatement stmt = null;
 		boolean status = false;
 		
-		String sql = "DELETE FROM HOTEL.HOSPEDES WHERE ID_RESERVA = ?;";
+		String sql = "delete from hotel.hospedes where id_reserva = ?;";
 		
 		try {
 			
@@ -162,7 +162,7 @@ public class HospedeDAO {
 		ResultSet rs = null;
 		List<Hospede> hospedes = new ArrayList<>();
 		
-		String sql = "SELECT * FROM HOTEL.HOSPEDES WHERE NOME LIKE ?;";
+		String sql = "select * from hotel.hospedes where nome like ?;";
 		
 		try {
 			stmt = conn.prepareStatement(sql);
@@ -174,13 +174,13 @@ public class HospedeDAO {
 			while(rs.next()) {
 				
 				Hospede h = new Hospede();
-				h.setIdHospede(rs.getString("ID_HOSPEDE"));
-				h.setNome(rs.getString("NOME"));
-				h.setSobrenome(rs.getString("SOBRENOME"));
-				h.setDataNascimento(rs.getString("DATA_NASCIMENTO"));
-				h.setNacionalidade(rs.getString("NACIONALIDADE"));
-				h.setTelefone(rs.getString("TELEFONE"));
-				h.setIdReserva(rs.getString("ID_RESERVA"));
+				h.setIdHospede(rs.getString("id_hospede"));
+				h.setNome(rs.getString("nome"));
+				h.setSobrenome(rs.getString("sobrenome"));
+				h.setDataNascimento(rs.getString("data_nascimento"));
+				h.setNacionalidade(rs.getString("nacionalidade"));
+				h.setTelefone(rs.getString("telefone"));
+				h.setIdReserva(rs.getString("id_reserva"));
 				
 				hospedes.add(h);
 			}

@@ -20,13 +20,13 @@ public class ReservaDAO {
 		PreparedStatement stmt = null;
 		boolean status = false;
 		
-		String sql = "INSERT INTO HOTEL.RESERVAS("
-				+ "ID_RESERVA,"
-				+ "DATA_ENTRADA,"
-				+ "DATA_SAIDA,"
-				+ "VALOR,"
-				+ "FORMA_PAGAMENTO)"
-				+ "VALUES (?, ?, ?, ?, ?);";
+		String sql = "insert into hotel.reservas ("
+			+ "id_reserva,"
+			+ "data_entrada,"
+			+ "data_saida,"
+			+ "valor,"
+			+ "forma_pagamento)"
+			+ "values (?, ?, ?, ?, ?);";
 		
 		try {
 			
@@ -57,7 +57,7 @@ public class ReservaDAO {
 		ResultSet rs = null;
 		
 		List<Reserva> reservas = new ArrayList<>();
-		String sql = "SELECT * FROM HOTEL.RESERVAS;";
+		String sql = "select * from hotel.reservas;";
 		
 		try {
 			stmt = conn.prepareStatement(sql);
@@ -67,11 +67,11 @@ public class ReservaDAO {
 				
 				Reserva r = new Reserva();
 				
-				r.setIdReserva(rs.getString("ID_RESERVA"));
-				r.setDataE(rs.getString("DATA_ENTRADA"));
-				r.setDataS(rs.getString("DATA_SAIDA"));
-				r.setValor(rs.getFloat("VALOR"));
-				r.setFormaPagamento(rs.getString("FORMA_PAGAMENTO"));
+				r.setIdReserva(rs.getString("id_reserva"));
+				r.setDataE(rs.getString("data_entrada"));
+				r.setDataS(rs.getString("data_saida"));
+				r.setValor(rs.getFloat("valor"));
+				r.setFormaPagamento(rs.getString("forma_pagamento"));
 				
 				reservas.add(r);
 			}
@@ -89,12 +89,12 @@ public class ReservaDAO {
 		PreparedStatement stmt = null;
 		boolean status = false;
 		
-		String sql = "UPDATE HOTEL.RESERVAS SET "
-				+ "DATA_ENTRADA = ?,"
-				+ "DATA_SAIDA = ?,"
-				+ "VALOR = ?,"
-				+ "FORMA_PAGAMENTO = ? "
-				+ "WHERE ID_RESERVA = ?;";
+		String sql = "update hotel.reservas set "
+			+ "data_entrada = ?,"
+			+ "data_saida = ?,"
+			+ "valor = ?,"
+			+ "forma_pagamento = ? "
+			+ "where id_reserva = ?;";
 		
 		try {
 			
@@ -124,7 +124,7 @@ public class ReservaDAO {
 		PreparedStatement stmt = null;
 		boolean status = false;
 		
-		String sql = "DELETE FROM HOTEL.RESERVAS WHERE ID_RESERVA = ?;";
+		String sql = "delete from hotel.reservas where id_reserva = ?;";
 		
 		try {
 			
@@ -150,7 +150,7 @@ public class ReservaDAO {
 		
 		List<Reserva> reservas = new ArrayList<>();
 		
-		String sql = "SELECT * FROM HOTEL.RESERVAS WHERE ID_RESERVA = ?;";
+		String sql = "select * from hotel.reservas where id_reserva = ?;";
 		
 		try {
 			
@@ -162,11 +162,11 @@ public class ReservaDAO {
 				
 				while(rs.next()) {
 					Reserva reserva = new Reserva();
-					reserva.setIdReserva(rs.getString("ID_RESERVA"));
-					reserva.setDataE(rs.getString("DATA_ENTRADA"));
-					reserva.setDataS(rs.getString("DATA_SAIDA"));
-					reserva.setValor(rs.getFloat("VALOR"));
-					reserva.setFormaPagamento(rs.getString("FORMA_PAGAMENTO"));
+					reserva.setIdReserva(rs.getString("id_reserva"));
+					reserva.setDataE(rs.getString("data_entrada"));
+					reserva.setDataS(rs.getString("data_saida"));
+					reserva.setValor(rs.getFloat("valor"));
+					reserva.setFormaPagamento(rs.getString("forma_pagamento"));
 					
 					reservas.add(reserva);
 				}
