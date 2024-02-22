@@ -21,7 +21,7 @@ public class ReservaDAO {
 		boolean status = false;
 		
 		String sql = "insert into hotel.reservas ("
-			+ "id_reserva,"
+			+ "id,"
 			+ "data_entrada,"
 			+ "data_saida,"
 			+ "valor,"
@@ -67,7 +67,7 @@ public class ReservaDAO {
 				
 				Reserva r = new Reserva();
 				
-				r.setIdReserva(rs.getString("id_reserva"));
+				r.setIdReserva(rs.getString("id"));
 				r.setDataE(rs.getString("data_entrada"));
 				r.setDataS(rs.getString("data_saida"));
 				r.setValor(rs.getFloat("valor"));
@@ -94,7 +94,7 @@ public class ReservaDAO {
 			+ "data_saida = ?,"
 			+ "valor = ?,"
 			+ "forma_pagamento = ? "
-			+ "where id_reserva = ?;";
+			+ "where id = ?;";
 		
 		try {
 			
@@ -124,7 +124,7 @@ public class ReservaDAO {
 		PreparedStatement stmt = null;
 		boolean status = false;
 		
-		String sql = "delete from hotel.reservas where id_reserva = ?;";
+		String sql = "delete from hotel.reservas where id = ?;";
 		
 		try {
 			
@@ -150,7 +150,7 @@ public class ReservaDAO {
 		
 		List<Reserva> reservas = new ArrayList<>();
 		
-		String sql = "select * from hotel.reservas where id_reserva = ?;";
+		String sql = "select * from hotel.reservas where id = ?;";
 		
 		try {
 			
@@ -162,7 +162,7 @@ public class ReservaDAO {
 				
 				while(rs.next()) {
 					Reserva reserva = new Reserva();
-					reserva.setIdReserva(rs.getString("id_reserva"));
+					reserva.setIdReserva(rs.getString("id"));
 					reserva.setDataE(rs.getString("data_entrada"));
 					reserva.setDataS(rs.getString("data_saida"));
 					reserva.setValor(rs.getFloat("valor"));

@@ -22,18 +22,6 @@ public class MenuPrincipal extends JFrame {
 	private JLabel labelExit;
 	int xMouse, yMouse;
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				MenuPrincipal frame = new MenuPrincipal();
-				frame.setVisible(true);
-				
-			}
-		});
-	}
-	
 	public MenuPrincipal() {
 		super("Menu Principal");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/img/hotel_40px.png")));
