@@ -72,7 +72,7 @@ public class HospedeDAO {
 				
 				Hospede h = new Hospede();
 				
-				h.setIdHospede(rs.getString("id_reserva"));
+				h.setIdHospede(rs.getString("id_hospede"));
 				h.setNome(rs.getString("nome"));
 				h.setSobrenome(rs.getString("sobrenome"));
 				h.setDataNascimento(rs.getString("data_nascimento"));
