@@ -357,9 +357,9 @@ public class RegistroHospede extends JFrame {
 		h.setNacionalidade((String) nacionalidade.getSelectedItem());
 		h.setTelefone(campoTelefone.getText());
 		h.setIdReserva(reserva.getIdReserva());
-		
-		boolean statusRegistroHospede = hDAO.insert(h);
+
 		boolean statusRegistroReserva = rDAO.insert(reserva);
+		boolean statusRegistroHospede = hDAO.insert(h);
 		
 		if(statusRegistroHospede && statusRegistroReserva) {
 			Sucesso msgSucesso = new Sucesso();

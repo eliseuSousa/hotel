@@ -20,7 +20,7 @@ public class HospedeDAO {
 		PreparedStatement stmt = null;
 		boolean status = false;
 		
-		String sql = "insert into hotel.hospedes("
+		String sql = "insert into hotel.hospedes ("
 			+ "id_hospede,"
 			+ "nome,"
 			+ "sobrenome,"
