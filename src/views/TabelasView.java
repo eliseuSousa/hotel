@@ -366,7 +366,6 @@ public class TabelasView extends JFrame {
 		if(tbAtiva == 0) idReserva = tbReservas.getValueAt(tbReservas.getSelectedRow(), 0).toString();
 		if(tbAtiva == 1) idReserva =  tbHospedes.getValueAt(tbHospedes.getSelectedRow(), 6).toString();
 		rDAO.delete(idReserva);
-		hDAO.delete(idReserva);
 		readTbReserva(rDAO.read());
 		readTbHospede(hDAO.read());
 	}
