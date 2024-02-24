@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -45,7 +44,7 @@ public class RegistroReserva extends JFrame{
 	private String dataEntrada;
 	private JDateChooser campoDataSaida;
 	private String dataSaida;
-	private JComboBox<Format> boxFormaPagamento;
+	private JComboBox<String> boxFormaPagamento;
 	private String formaPagamento;
 	int xMouse, yMouse;
 	private JLabel labelExit;
@@ -196,12 +195,12 @@ public class RegistroReserva extends JFrame{
 		labelValor.setFont(new Font("Roboto Black", Font.BOLD, 18));
 		panel.add(labelValor);
 		
-		boxFormaPagamento = new JComboBox();
+		boxFormaPagamento = new JComboBox<>();
 		boxFormaPagamento.setBounds(68, 417, 289, 38);
 		boxFormaPagamento.setBackground(SystemColor.text);
 		boxFormaPagamento.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
 		boxFormaPagamento.setFont(new Font("Roboto", Font.PLAIN, 16));
-		boxFormaPagamento.setModel(new DefaultComboBoxModel(new String[] {"Cartão de Crédito", "Cartão de Débito", "Dinheiro"}));
+		boxFormaPagamento.setModel(new DefaultComboBoxModel<>(new String[] {"Cartão de Crédito", "Cartão de Débito", "Dinheiro"}));
 		panel.add(boxFormaPagamento);
 		
 		JLabel labelFormaPagamento = new JLabel("FORMA DE PAGAMENTO");
